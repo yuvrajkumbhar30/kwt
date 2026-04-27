@@ -1,3 +1,4 @@
+import { Header } from "@/components/header";
 import { HeroSection } from "@/components/sections/hero";
 import { CredibilitySection } from "@/components/sections/credibility";
 import { ServicesSection } from "@/components/sections/services";
@@ -10,16 +11,19 @@ import { Footer } from "@/components/sections/footer";
 
 export default function Home() {
   return (
-    <main className="overflow-hidden">
-      <HeroSection />
+    <>
+      <Header />
+      <main className="overflow-hidden">
+        <HeroSection />
       <CredibilitySection />
       <ServicesSection />
       <AboutSection />
       <WhyUsSection />
       <ProjectsSection />
       <QHSESection />
-      <CTASection />
-      <Footer />
-    </main>
+        <CTASection />
+        <Footer />
+      </main>
+    </>
   );
 }

@@ -4,16 +4,16 @@ export function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-300 py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-5 gap-8 mb-12">
           <div>
             <h3 className="text-white font-bold text-lg mb-4">KDC</h3>
             <p className="text-sm text-slate-400">
-              Delivering advanced drilling and oilfield services across the Middle East.
+              Kuwait Drilling CO. Delivering advanced drilling and oilfield services across the Middle East with 20+ years of excellence.
             </p>
           </div>
 
           <div>
-            <h4 className="text-white font-bold mb-4">Quick Links</h4>
+            <h4 className="text-white font-bold mb-4">Main</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="/" className="hover:text-blue-500 transition-colors">
@@ -27,12 +27,12 @@ export function Footer() {
               </li>
               <li>
                 <a href="#" className="hover:text-blue-500 transition-colors">
-                  Services
+                  Chairman&apos;s Message
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-blue-500 transition-colors">
-                  QHSE
+                  Management Team
                 </a>
               </li>
             </ul>
@@ -53,6 +53,11 @@ export function Footer() {
               </li>
               <li>
                 <a href="#" className="hover:text-blue-500 transition-colors">
+                  Tubular Running
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-blue-500 transition-colors">
                   BHA Rental
                 </a>
               </li>
@@ -65,7 +70,33 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold mb-4">Contact Info</h4>
+            <h4 className="text-white font-bold mb-4">Company</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-blue-500 transition-colors">
+                  QHSE
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-blue-500 transition-colors">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-blue-500 transition-colors">
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-blue-500 transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-white font-bold mb-4">Contact</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <Phone className="w-4 h-4 mt-0.5 flex-shrink-0" />
@@ -90,7 +121,7 @@ export function Footer() {
         <div className="border-t border-slate-700 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-400">
-              © 2024 KDC Oilfield Services. All rights reserved.
+              © 2024 Kuwait Drilling CO. All rights reserved.
             </p>
             <div className="flex gap-4">
               <a
