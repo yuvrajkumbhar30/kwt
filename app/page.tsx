@@ -1,16 +1,25 @@
+import { HeroSection } from "@/components/sections/hero";
+import { CredibilitySection } from "@/components/sections/credibility";
+import { ServicesSection } from "@/components/sections/services";
+import { AboutSection } from "@/components/sections/about";
+import { WhyUsSection } from "@/components/sections/why-us";
+import { ProjectsSection } from "@/components/sections/projects";
+import { QHSESection } from "@/components/sections/qhse";
+import { CTASection } from "@/components/sections/cta";
+import { Footer } from "@/components/sections/footer";
+
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center font-sans">
-      <main className="flex w-full max-w-3xl flex-col items-center gap-8 px-6 py-16 text-center sm:items-start sm:text-left">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            KDCKWT
-          </h1>
-          <p className="max-w-md text-lg text-muted-foreground">
-            To get started, send a prompt or modify this page directly.
-          </p>
-        </div>
-      </main>
-    </div>
+    <main className="overflow-hidden">
+      <HeroSection />
+      <CredibilitySection />
+      <ServicesSection />
+      <AboutSection />
+      <WhyUsSection />
+      <ProjectsSection />
+      <QHSESection />
+      <CTASection />
+      <Footer />
+    </main>
   );
 }

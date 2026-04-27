@@ -7,26 +7,15 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'v0 App',
-  description: 'Created with v0',
-  generator: 'v0.app',
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+  title: 'KDC - Advanced Drilling & Oilfield Services in Kuwait',
+  description: 'Leading oilfield services provider in Kuwait offering drilling, directional drilling, tubular running, BHA rental, and fishing services. 20+ years of experience with 100% safety compliance.',
+  keywords: 'drilling, oilfield services, Kuwait, directional drilling, workover, QHSE, oil and gas',
+  openGraph: {
+    title: 'KDC - Oilfield Services Kuwait',
+    description: 'Professional drilling and oilfield solutions across the Middle East',
+    url: 'https://www.kdckwt.com',
   },
+  generator: 'v0.app',
 }
 
 export default function RootLayout({
@@ -35,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-white">
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
