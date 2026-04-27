@@ -18,7 +18,7 @@ export const services = [
     title: "Tubular Running Services",
     description:
       "Professional tubular running and handling services with certified experienced personnel.",
-    icon: "Pipe",
+    icon: "Wrench",
   },
   {
     id: 4,

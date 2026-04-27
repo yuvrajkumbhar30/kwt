@@ -1,7 +1,7 @@
 import {
   Drill,
   Compass,
-  Pipe,
+  Wrench,
   Package,
   Anchor,
   ArrowRight,
@@ -12,7 +12,7 @@ import { services } from "@/lib/data/services";
 const iconMap = {
   Drill: Drill,
   Compass: Compass,
-  Pipe: Pipe,
+  Wrench: Wrench,
   Package: Package,
   Anchor: Anchor,
 };
