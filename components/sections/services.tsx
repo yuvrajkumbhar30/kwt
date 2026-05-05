@@ -1,62 +1,69 @@
-import {
-  Drill,
-  Compass,
-  Wrench,
-  Package,
-  Anchor,
-  ArrowRight,
-} from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { services } from "@/lib/data/services";
-
-const iconMap = {
-  Drill: Drill,
-  Compass: Compass,
-  Wrench: Wrench,
-  Package: Package,
-  Anchor: Anchor,
-};
 
 export function ServicesSection() {
   return (
-    <section className="py-20 px-4 bg-slate-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+    <section className="py-20 px-4 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-14">
+          <p className="text-blue-600 text-xs font-semibold tracking-[0.2em] uppercase mb-2">
+            What We Do
+          </p>
+          <h2
+            className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 text-balance"
+            style={{ fontFamily: 'var(--font-barlow-condensed, sans-serif)' }}
+          >
             Our Services
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-slate-500 text-lg max-w-2xl mx-auto leading-relaxed">
             Comprehensive oilfield solutions tailored to your operational needs
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {services.map((service) => {
-            const IconComponent = iconMap[service.icon as keyof typeof iconMap];
-            return (
-              <Card
-                key={service.id}
-                className="p-8 hover:shadow-lg transition-shadow duration-300 border-slate-200"
-              >
-                <div className="mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <IconComponent className="w-6 h-6 text-blue-600" />
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="group relative flex flex-col rounded-2xl overflow-hidden border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-400 bg-white"
+            >
+              {/* Image */}
+              <div className="relative h-48 overflow-hidden">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+              </div>
+
+              {/* Content */}
+              <div className="flex flex-col flex-1 p-6">
+                <h3
+                  className="text-xl font-bold text-slate-900 mb-2"
+                  style={{ fontFamily: 'var(--font-barlow-condensed, sans-serif)' }}
+                >
                   {service.title}
                 </h3>
-                <p className="text-slate-600 mb-4">{service.description}</p>
-                <a
+                <p className="text-slate-500 text-sm leading-relaxed flex-1 mb-5">
+                  {service.description}
+                </p>
+                <Link
                   href="#"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium group"
+                  className="inline-flex items-center text-blue-700 hover:text-blue-800 font-semibold text-sm group/link"
                 >
                   Learn More
-                  <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Card>
-            );
-          })}
+                  <ArrowRight className="w-4 h-4 ml-1.5 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+
+              {/* Blue bottom accent bar */}
+              <div className="h-1 w-0 group-hover:w-full bg-blue-700 transition-all duration-400 mt-auto" />
+            </div>
+          ))}
         </div>
       </div>
     </section>

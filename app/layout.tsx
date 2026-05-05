@@ -1,10 +1,14 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter, Barlow_Condensed } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const _barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-barlow-condensed",
+});
 
 export const metadata: Metadata = {
   title: 'KDC - Advanced Drilling & Oilfield Services in Kuwait',
@@ -24,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-white">
+    <html lang="en" className={`bg-white ${_inter.variable} ${_barlowCondensed.variable}`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
