@@ -132,4 +132,7 @@
   .font-display {
     font-family: var(--font-display);
   }
+  .font-agdasima {
+    font-family: var(--font-agdasima), 'Agdasima', sans-serif;
+  }
 }
