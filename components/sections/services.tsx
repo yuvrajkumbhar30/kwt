@@ -12,8 +12,7 @@ export function ServicesSection() {
             What We Do
           </p>
           <h2
-            className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 text-balance"
-            style={{ fontFamily: 'var(--font-barlow-condensed, sans-serif)' }}
+            className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 text-balance font-display"
           >
             Our Services
           </h2>
@@ -43,8 +42,7 @@ export function ServicesSection() {
               {/* Content */}
               <div className="flex flex-col flex-1 p-6">
                 <h3
-                  className="text-xl font-bold text-slate-900 mb-2"
-                  style={{ fontFamily: 'var(--font-barlow-condensed, sans-serif)' }}
+                  className="text-xl font-bold text-slate-900 mb-2 font-display"
                 >
                   {service.title}
                 </h3>

@@ -7,8 +7,8 @@ export function AboutSection() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img
-              src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=600&h=500&fit=crop"
-              alt="KDC Oilfield Operations"
+              src="https://www.kdckwt.com/wp-content/uploads/2025/05/KDC-first-rig-black-and-white-768x514-copy-380x254@2x.jpg"
+              alt="KDC First Rig - Historical Photo"
               className="w-full h-full object-cover"
             />
           </div>

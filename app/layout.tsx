@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
-import { Inter, Barlow_Condensed } from 'next/font/google'
+import { Poppins, Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const _barlowCondensed = Barlow_Condensed({
+const _poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-barlow-condensed",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-poppins",
+});
+const _montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -28,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-white ${_inter.variable} ${_barlowCondensed.variable}`}>
+    <html lang="en" className={`bg-white ${_poppins.variable} ${_montserrat.variable}`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}

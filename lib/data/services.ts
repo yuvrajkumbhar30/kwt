@@ -39,4 +39,12 @@ export const services = [
     icon: "Anchor",
     image: "/images/service-fishing.jpg",
   },
+  {
+    id: 6,
+    title: "Water Well Drilling",
+    description:
+      "Expert water well drilling services for industrial and agricultural applications in arid environments.",
+    icon: "Droplets",
+    image: "/images/service-waterwell.jpg",
+  },
 ];
