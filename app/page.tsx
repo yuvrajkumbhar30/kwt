@@ -7,6 +7,7 @@ import { ClientsSection } from "@/components/sections/clients";
 import { AboutSection } from "@/components/sections/about";
 import { WhyUsSection } from "@/components/sections/why-us";
 import { ProjectsSection } from "@/components/sections/projects";
+import { MapSection } from "@/components/sections/map-section";
 import { QHSESection } from "@/components/sections/qhse";
 import { CTASection } from "@/components/sections/cta";
 import { Footer } from "@/components/sections/footer";
@@ -24,6 +25,7 @@ export default function Home() {
         <AboutSection />
         <WhyUsSection />
         <ProjectsSection />
+        <MapSection />
         <QHSESection />
         <CTASection />
         <Footer />

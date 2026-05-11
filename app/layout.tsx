@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Poppins, Montserrat, Agdasima } from 'next/font/google'
+import { Poppins, Montserrat, Agdasima, Oswald } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -17,6 +17,11 @@ const _agdasima = Agdasima({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-agdasima",
+});
+const _oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-oswald",
 });
 
 export const metadata: Metadata = {
@@ -37,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-white ${_poppins.variable} ${_montserrat.variable} ${_agdasima.variable}`}>
+    <html lang="en" className={`bg-white ${_poppins.variable} ${_montserrat.variable} ${_agdasima.variable} ${_oswald.variable}`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
