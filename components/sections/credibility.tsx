@@ -67,7 +67,7 @@ export function CredibilitySection() {
   });
 
   return (
-    <section className="relative py-20 px-4 overflow-hidden bg-slate-900">
+    <section className="relative py-12 px-4 overflow-hidden bg-slate-900">
       {/* SVG cross-hatch texture overlay */}
       <div className="absolute inset-0 opacity-[0.04]" aria-hidden>
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -85,7 +85,7 @@ export function CredibilitySection() {
       <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-blue-800/20 rounded-full blur-3xl pointer-events-none" aria-hidden />
 
       <div className="relative max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8">
           <p className="text-blue-400 text-xs font-semibold tracking-[0.2em] uppercase mb-3">
             Trusted by Kuwait&apos;s Energy Sector
           </p>

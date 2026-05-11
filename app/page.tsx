@@ -1,7 +1,9 @@
 import { Header } from "@/components/header";
 import { HeroSlider } from "@/components/sections/hero-slider";
+import { AwardsSection } from "@/components/sections/awards";
 import { CredibilitySection } from "@/components/sections/credibility";
 import { ServicesSection } from "@/components/sections/services";
+import { ClientsSection } from "@/components/sections/clients";
 import { AboutSection } from "@/components/sections/about";
 import { WhyUsSection } from "@/components/sections/why-us";
 import { ProjectsSection } from "@/components/sections/projects";
@@ -15,8 +17,10 @@ export default function Home() {
       <Header />
       <main className="overflow-hidden">
         <HeroSlider />
+        <AwardsSection />
         <CredibilitySection />
         <ServicesSection />
+        <ClientsSection />
         <AboutSection />
         <WhyUsSection />
         <ProjectsSection />

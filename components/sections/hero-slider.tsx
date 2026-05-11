@@ -17,7 +17,7 @@ const slides = [
     title: 'Advanced Drilling\nSolutions for Kuwait',
     subtitle: 'Industry-leading drilling and workover operations with over 20 years of expertise across Kuwait and the region.',
     cta: { label: 'Our Services', href: '#' },
-    ctaSecondary: { label: 'Request Quote', href: '#' },
+    ctaSecondary: { label: 'Contact Us', href: '#' },
   },
   {
     id: 2,
@@ -109,20 +109,19 @@ export function HeroSlider() {
                 priority={slide.id === 1}
                 sizes="100vw"
               />
-              {/* Dark overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-900/60 to-slate-900/30" />
+              {/* Subtle dark overlay for readability — no colour tint, just darkness */}
+              <div className="absolute inset-0 bg-black/50" />
+              {/* Bottom vignette for extra text contrast */}
+              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent" />
 
               {/* Content */}
               <div className="absolute inset-0 flex items-center">
                 <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                   <div className="max-w-2xl">
-                    <span className="inline-block mb-4 px-3 py-1 text-xs font-semibold tracking-widest uppercase text-blue-300 bg-blue-900/40 border border-blue-500/40 rounded-full backdrop-blur-sm">
+                    <span className="inline-block mb-4 px-3 py-1 text-xs font-semibold tracking-widest uppercase text-white/80 border border-white/30 rounded-full">
                       {slide.badge}
                     </span>
-                    <h1
-                      className="text-4xl md:text-6xl font-bold text-white mb-5 leading-tight text-balance"
-                      style={{ fontFamily: 'var(--font-barlow-condensed, sans-serif)', letterSpacing: '-0.01em' }}
-                    >
+                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-5 leading-tight text-balance font-display drop-shadow-md">
                       {slide.title.split('\n').map((line, i) => (
                         <span key={i}>
                           {line}
@@ -130,7 +129,7 @@ export function HeroSlider() {
                         </span>
                       ))}
                     </h1>
-                    <p className="text-slate-300 text-base md:text-lg leading-relaxed mb-8 max-w-xl">
+                    <p className="text-white/90 text-base md:text-lg leading-relaxed mb-8 max-w-xl drop-shadow">
                       {slide.subtitle}
                     </p>
                     <div className="flex flex-wrap gap-3">
@@ -142,7 +141,7 @@ export function HeroSlider() {
                       </Link>
                       <Link
                         href={slide.ctaSecondary.href}
-                        className="px-7 py-3 bg-white/10 text-white font-semibold rounded-lg border border-white/30 hover:bg-white/20 backdrop-blur-sm transition-colors text-sm"
+                        className="px-7 py-3 bg-white/15 text-white font-semibold rounded-lg border border-white/40 hover:bg-white/25 transition-colors text-sm"
                       >
                         {slide.ctaSecondary.label}
                       </Link>

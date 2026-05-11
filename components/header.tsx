@@ -125,16 +125,6 @@ export function Header() {
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="hidden lg:flex">
-          <Link
-            href="#"
-            className="px-5 py-2 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors text-sm shadow"
-          >
-            Request Quote
-          </Link>
-        </div>
-
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -190,15 +180,7 @@ export function Header() {
                 )}
               </div>
             ))}
-            <div className="pt-3 pb-2">
-              <Link
-                href="#"
-                className="block w-full text-center py-2.5 bg-blue-700 text-white rounded-lg font-semibold hover:bg-blue-800 transition-colors text-sm"
-                onClick={() => setIsOpen(false)}
-              >
-                Request Quote
-              </Link>
-            </div>
+
           </div>
         </div>
       )}
