@@ -14,8 +14,8 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/sections/footer';
 
 /* ─── Brand ──────────────────────────────────────────────────────────── */
-const RED  = '#C0182A';
-const DARK = '#111111';
+const BRAND  = '#1d4ed8'; // blue-700
+const DARK = '#0f172a'; // slate-900
 
 /* ─── Animation variants ─────────────────────────────────────────────── */
 const fadeUp = {
@@ -214,11 +214,11 @@ export default function WaterWellPage() {
 
         {/* Red accent line */}
         <motion.div
-          className="absolute top-0 left-0 h-1 bg-red-700"
+          className="absolute top-0 left-0 h-1 bg-blue-700"
           initial={{ width: 0 }}
           animate={{ width: '35%' }}
           transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}
-          style={{ backgroundColor: RED }}
+          style={{ backgroundColor: BRAND }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
@@ -226,7 +226,7 @@ export default function WaterWellPage() {
             {/* Eyebrow */}
             <Reveal custom={0}>
               <div className="flex items-center gap-3 mb-6">
-                <span className="w-8 h-px bg-red-500" style={{ backgroundColor: RED }} />
+                <span className="w-8 h-px bg-blue-500" style={{ backgroundColor: BRAND }} />
                 <span className="text-xs tracking-[0.35em] uppercase font-semibold text-white/70">
                   KDC Services
                 </span>
@@ -237,7 +237,7 @@ export default function WaterWellPage() {
             <Reveal custom={1}>
               <h1 className="font-display text-6xl md:text-8xl font-bold text-white leading-none tracking-tight text-balance">
                 Water Well<br />
-                <span style={{ color: RED }}>Services</span>
+                <span style={{ color: BRAND }}>Services</span>
               </h1>
             </Reveal>
 
@@ -253,7 +253,7 @@ export default function WaterWellPage() {
                 <Link
                   href="/contact"
                   className="group inline-flex items-center gap-2 px-8 py-4 font-semibold text-white rounded-lg text-sm tracking-wide transition-all duration-300"
-                  style={{ backgroundColor: RED }}
+                  style={{ backgroundColor: BRAND }}
                 >
                   Contact Us
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -329,7 +329,7 @@ export default function WaterWellPage() {
                 transition={{ delay: 0.4, duration: 0.5 }}
                 viewport={{ once: true }}
               >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: RED }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: BRAND }}>
                   <Star className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -344,8 +344,8 @@ export default function WaterWellPage() {
           <div className="flex flex-col gap-6">
             <Reveal custom={0}>
               <div className="flex items-center gap-3">
-                <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-                <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>
+                <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+                <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>
                   Our Expertise
                 </span>
               </div>
@@ -370,9 +370,9 @@ export default function WaterWellPage() {
                 { icon: Gauge,    label: 'Efficiency',        sub: '99% uptime record' },
               ].map((item, i) => (
                 <Reveal key={item.label} custom={i * 0.5}>
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-stone-50 border border-stone-100 hover:border-red-200 hover:bg-red-50/30 transition-colors duration-300">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${RED}18` }}>
-                      <item.icon className="w-4 h-4" style={{ color: RED }} />
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-stone-50 border border-stone-100 hover:border-blue-200 hover:bg-blue-50/30 transition-colors duration-300">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${BRAND}18` }}>
+                      <item.icon className="w-4 h-4" style={{ color: BRAND }} />
                     </div>
                     <div>
                       <div className="font-semibold text-stone-900 text-sm">{item.label}</div>
@@ -393,8 +393,8 @@ export default function WaterWellPage() {
             <div>
               <Reveal custom={0}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>What We Do</span>
+                  <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>What We Do</span>
                 </div>
               </Reveal>
               <Reveal custom={1}>
@@ -420,15 +420,15 @@ export default function WaterWellPage() {
                   {/* Red top accent on hover */}
                   <motion.div
                     className="absolute top-0 left-0 right-0 h-0.5"
-                    style={{ backgroundColor: RED }}
+                    style={{ backgroundColor: BRAND }}
                     initial={{ scaleX: 0 }}
                     whileHover={{ scaleX: 1 }}
                     transition={{ duration: 0.3 }}
                   />
 
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 flex-shrink-0"
-                    style={{ backgroundColor: `${RED}14` }}>
-                    <svc.icon className="w-5 h-5" style={{ color: RED }} />
+                    style={{ backgroundColor: `${BRAND}14` }}>
+                    <svc.icon className="w-5 h-5" style={{ color: BRAND }} />
                   </div>
 
                   <h3 className="font-display font-bold text-stone-900 text-base mb-2 leading-snug">{svc.title}</h3>
@@ -450,7 +450,7 @@ export default function WaterWellPage() {
                     )}
                   </AnimatePresence>
 
-                  <div className="mt-4 flex items-center gap-1 text-xs font-semibold" style={{ color: RED }}>
+                  <div className="mt-4 flex items-center gap-1 text-xs font-semibold" style={{ color: BRAND }}>
                     {activeCard === i ? (
                       <><X className="w-3 h-3" /> Close</>
                     ) : (
@@ -469,8 +469,8 @@ export default function WaterWellPage() {
         <div className="max-w-7xl mx-auto">
           <Reveal custom={0}>
             <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-              <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>How We Work</span>
+              <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+              <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>How We Work</span>
             </div>
           </Reveal>
           <Reveal custom={1}>
@@ -494,8 +494,8 @@ export default function WaterWellPage() {
                     {/* Number bubble */}
                     <motion.div
                       className="relative z-10 w-16 h-16 rounded-full border-2 flex items-center justify-center mb-5 font-display font-bold text-lg transition-all duration-300 bg-white"
-                      style={{ borderColor: RED, color: RED }}
-                      whileHover={{ backgroundColor: RED, color: '#fff' }}
+                      style={{ borderColor: BRAND, color: BRAND }}
+                      whileHover={{ backgroundColor: BRAND, color: '#fff' }}
                     >
                       {step.num}
                     </motion.div>
@@ -514,10 +514,10 @@ export default function WaterWellPage() {
                 <div className="flex gap-5">
                   <div className="flex flex-col items-center">
                     <div className="w-12 h-12 rounded-full border-2 flex items-center justify-center font-display font-bold text-sm flex-shrink-0"
-                      style={{ borderColor: RED, color: RED }}>
+                      style={{ borderColor: BRAND, color: BRAND }}>
                       {step.num}
                     </div>
-                    {i < processSteps.length - 1 && <div className="w-px flex-1 mt-3" style={{ backgroundColor: `${RED}30` }} />}
+                    {i < processSteps.length - 1 && <div className="w-px flex-1 mt-3" style={{ backgroundColor: `${BRAND}30` }} />}
                   </div>
                   <div className="pb-6">
                     <h3 className="font-display font-bold text-stone-900 mb-1">{step.title}</h3>
@@ -537,8 +537,8 @@ export default function WaterWellPage() {
             <div>
               <Reveal custom={0}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Our Fleet</span>
+                  <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>Our Fleet</span>
                 </div>
               </Reveal>
               <Reveal custom={1}>
@@ -566,11 +566,11 @@ export default function WaterWellPage() {
             {equipment.map((eq, i) => (
               <Reveal key={eq.title} custom={i * 0.1} variants={scaleIn}>
                 <motion.div
-                  className="bg-white/5 rounded-2xl p-6 border border-white/8 hover:border-red-800/60 hover:bg-white/8 transition-all duration-300 flex flex-col gap-4"
+                  className="bg-white/5 rounded-2xl p-6 border border-white/8 hover:border-blue-800/60 hover:bg-white/8 transition-all duration-300 flex flex-col gap-4"
                   whileHover={{ y: -4 }}
                 >
                   <span className="inline-block self-start text-xs font-bold px-3 py-1 rounded-full border"
-                    style={{ color: RED, borderColor: `${RED}50`, backgroundColor: `${RED}15` }}>
+                    style={{ color: BRAND, borderColor: `${BRAND}50`, backgroundColor: `${BRAND}15` }}>
                     {eq.badge}
                   </span>
                   <div>
@@ -592,8 +592,8 @@ export default function WaterWellPage() {
           <div>
             <Reveal custom={0}>
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-                <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Safety First</span>
+                <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+                <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>Safety First</span>
               </div>
             </Reveal>
             <Reveal custom={1}>
@@ -604,7 +604,7 @@ export default function WaterWellPage() {
               {safetyKPIs.map((kpi, i) => (
                 <Reveal key={kpi.label} custom={i * 0.1}>
                   <div className="p-6 rounded-2xl border border-stone-200 bg-stone-50">
-                    <div className="font-display text-4xl font-bold mb-1" style={{ color: RED }}>
+                    <div className="font-display text-4xl font-bold mb-1" style={{ color: BRAND }}>
                       {kpi.value}{kpi.suffix}
                     </div>
                     <div className="font-semibold text-stone-900 text-sm">{kpi.label}</div>
@@ -620,7 +620,7 @@ export default function WaterWellPage() {
                 {['ISO 9001:2015', 'ISO 14001', 'OHSAS 18001', 'KOC Approved'].map((cert) => (
                   <span key={cert}
                     className="px-4 py-1.5 rounded-full text-xs font-bold border"
-                    style={{ color: RED, borderColor: `${RED}50`, backgroundColor: `${RED}08` }}>
+                    style={{ color: BRAND, borderColor: `${BRAND}50`, backgroundColor: `${BRAND}08` }}>
                     {cert}
                   </span>
                 ))}
@@ -644,7 +644,7 @@ export default function WaterWellPage() {
                 ].map((point, i) => (
                   <Reveal key={point} custom={i * 0.1}>
                     <div className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: RED }} />
+                      <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: BRAND }} />
                       <span className="text-stone-600 text-sm leading-relaxed">{point}</span>
                     </div>
                   </Reveal>
@@ -660,8 +660,8 @@ export default function WaterWellPage() {
         <div className="max-w-7xl mx-auto">
           <Reveal custom={0}>
             <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-              <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Our Work</span>
+              <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+              <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>Our Work</span>
             </div>
           </Reveal>
           <Reveal custom={1}>
@@ -725,8 +725,8 @@ export default function WaterWellPage() {
             <div>
               <Reveal custom={0}>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="w-8 h-px" style={{ backgroundColor: RED }} />
-                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Why Choose Us</span>
+                  <span className="w-8 h-px" style={{ backgroundColor: BRAND }} />
+                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: BRAND }}>Why Choose Us</span>
                 </div>
               </Reveal>
               <Reveal custom={1}>
@@ -743,7 +743,7 @@ export default function WaterWellPage() {
                 <Link
                   href="/contact"
                   className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 font-semibold text-white rounded-lg text-sm transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: RED }}
+                  style={{ backgroundColor: BRAND }}
                 >
                   Start a Conversation <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -754,12 +754,12 @@ export default function WaterWellPage() {
               {whyKDC.map((item, i) => (
                 <Reveal key={item.title} custom={i * 0.1} variants={scaleIn}>
                   <motion.div
-                    className="p-6 rounded-2xl border border-stone-200 bg-stone-50 hover:border-red-200 hover:bg-red-50/40 transition-all duration-300 group"
+                    className="p-6 rounded-2xl border border-stone-200 bg-stone-50 hover:border-blue-200 hover:bg-blue-50/40 transition-all duration-300 group"
                     whileHover={{ y: -3 }}
                   >
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                      style={{ backgroundColor: `${RED}14` }}>
-                      <item.icon className="w-5 h-5" style={{ color: RED }} />
+                      style={{ backgroundColor: `${BRAND}14` }}>
+                      <item.icon className="w-5 h-5" style={{ color: BRAND }} />
                     </div>
                     <h3 className="font-display font-bold text-stone-900 text-sm mb-2">{item.title}</h3>
                     <p className="text-stone-500 text-xs leading-relaxed">{item.desc}</p>
@@ -772,7 +772,7 @@ export default function WaterWellPage() {
       </section>
 
       {/* ── 9. CTA ───────────────────────────────────────────────────── */}
-      <section className="py-28 px-6 md:px-12 relative overflow-hidden" style={{ backgroundColor: RED }}>
+      <section className="py-28 px-6 md:px-12 relative overflow-hidden" style={{ backgroundColor: BRAND }}>
         {/* Texture */}
         <div className="absolute inset-0 opacity-10"
           style={{
@@ -804,7 +804,7 @@ export default function WaterWellPage() {
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 bg-white font-bold text-sm rounded-lg hover:bg-stone-100 transition-colors"
-                style={{ color: RED }}
+                style={{ color: BRAND }}
               >
                 <Phone className="w-4 h-4" /> Contact Our Team
               </Link>
@@ -834,12 +834,12 @@ export default function WaterWellPage() {
               <Reveal key={svc.title} custom={i * 0.1} variants={scaleIn}>
                 <Link href={svc.href}>
                   <motion.div
-                    className="group p-6 rounded-2xl border border-white/8 hover:border-red-700/50 bg-white/4 hover:bg-white/8 transition-all duration-300 flex items-center justify-between"
+                    className="group p-6 rounded-2xl border border-white/8 hover:border-blue-700/50 bg-white/4 hover:bg-white/8 transition-all duration-300 flex items-center justify-between"
                     whileHover={{ y: -3 }}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${RED}20` }}>
-                        <svc.icon className="w-5 h-5" style={{ color: RED }} />
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${BRAND}20` }}>
+                        <svc.icon className="w-5 h-5" style={{ color: BRAND }} />
                       </div>
                       <span className="font-semibold text-white text-sm">{svc.title}</span>
                     </div>
@@ -862,7 +862,7 @@ export default function WaterWellPage() {
         <Link
           href="/contact"
           className="flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-bold shadow-2xl hover:opacity-90 transition-opacity"
-          style={{ backgroundColor: RED }}
+          style={{ backgroundColor: BRAND }}
         >
           <Phone className="w-4 h-4" />
           <span className="hidden sm:inline">Contact Us</span>

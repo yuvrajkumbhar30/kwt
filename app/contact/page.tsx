@@ -54,7 +54,7 @@ const quickCards = [
     description: "Technical operations, service delivery, and field support.",
     email: "info@kdc-services.com",
     phone: "+965 239 815 98",
-    color: "amber",
+    color: "blue",
   },
   {
     id: "vendor",
@@ -70,7 +70,7 @@ const quickCards = [
 const colorMap: Record<string, { bg: string; border: string; icon: string; badge: string }> = {
   blue:    { bg: "bg-blue-50",   border: "border-blue-100",   icon: "bg-blue-600 text-white",       badge: "bg-blue-600" },
   emerald: { bg: "bg-emerald-50",border: "border-emerald-100",icon: "bg-emerald-600 text-white",    badge: "bg-emerald-600" },
-  amber:   { bg: "bg-amber-50",  border: "border-amber-100",  icon: "bg-amber-500 text-white",      badge: "bg-amber-500" },
+  blue:   { bg: "bg-blue-50",  border: "border-blue-100",  icon: "bg-blue-700 text-white",      badge: "bg-blue-700" },
   slate:   { bg: "bg-slate-50",  border: "border-slate-200",  icon: "bg-slate-700 text-white",      badge: "bg-slate-700" },
 };
 
@@ -516,7 +516,7 @@ function LocationsSection() {
       country: "Oman",
       city: "Muscat",
       type: "International Partner",
-      typeColor: "bg-amber-100 text-amber-700",
+      typeColor: "bg-blue-100 text-blue-700",
       address: "Muscat Governorate, Oman",
       phone: "Via Kuwait HQ",
       email: "info@kdc-services.com",
@@ -526,7 +526,7 @@ function LocationsSection() {
       country: "Jordan",
       city: "Amman",
       type: "International Partner",
-      typeColor: "bg-amber-100 text-amber-700",
+      typeColor: "bg-blue-100 text-blue-700",
       address: "Amman, Hashemite Kingdom of Jordan",
       phone: "Via Kuwait HQ",
       email: "info@kdc-services.com",
@@ -602,7 +602,7 @@ function CareersBanner() {
       <div className="absolute inset-0 bg-slate-950/70" />
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
-        <p className="text-amber-400 text-xs font-semibold tracking-[0.3em] uppercase mb-3">
+        <p className="text-blue-600 text-xs font-semibold tracking-[0.3em] uppercase mb-3">
           Join Our Team
         </p>
         <h2 className="font-display text-5xl md:text-6xl font-bold text-white mb-5 text-balance">
@@ -614,7 +614,7 @@ function CareersBanner() {
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             href="#"
-            className="px-7 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl transition-colors font-display tracking-wide text-sm shadow-lg inline-flex items-center gap-2"
+            className="px-7 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-colors font-display tracking-wide text-sm shadow-lg inline-flex items-center gap-2"
           >
             Explore Careers <ArrowRight className="w-4 h-4" />
           </Link>
