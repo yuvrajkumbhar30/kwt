@@ -36,7 +36,7 @@ const navItems: NavItem[] = [
       { label: 'Fishing Services', href: '#' },
     ],
   },
-  { label: 'QHSE', href: '#' },
+  { label: 'QHSE', href: '/qhse' },
   {
     label: 'Careers',
     href: '#',
