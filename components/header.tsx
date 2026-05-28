@@ -30,7 +30,7 @@ const navItems: NavItem[] = [
       { label: 'Drilling & Workover', href: '/services/drilling-workover' },
       { label: 'Directional Drilling', href: '#' },
       { label: 'Water Well', href: '/services/water-well' },
-      { label: 'Tubular Running Services', href: '#' },
+      { label: 'Tubular Running Services', href: '/services/tubular-running' },
       { label: 'Manpower', href: '#' },
       { label: 'BHA Rental', href: '#' },
       { label: 'Fishing Services', href: '#' },
