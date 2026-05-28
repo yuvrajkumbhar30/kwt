@@ -39,7 +39,7 @@ const serviceLinks = [
   { label: "Tubular Running", href: "#", icon: Wrench },
   { label: "BHA Rental", href: "#", icon: Package },
   { label: "Fishing Services", href: "#", icon: Anchor },
-  { label: "Water Well Drilling", href: "#", icon: Droplets },
+  { label: "Water Well Drilling", href: "/services/water-well", icon: Droplets },
 ];
 
 const companyLinks = [
