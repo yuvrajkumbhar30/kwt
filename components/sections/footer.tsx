@@ -30,7 +30,7 @@ const quickLinks = [
   { label: "About Us", href: "#", icon: Info },
   { label: "Chairman's Message", href: "/chairmanmessage", icon: MessageSquare },
   { label: "Board of Directors", href: "/board-of-directors", icon: Users },
-  { label: "Management Team", href: "#", icon: Users },
+  { label: "Management Team", href: "/management-team", icon: Users },
 ];
 
 const serviceLinks = [

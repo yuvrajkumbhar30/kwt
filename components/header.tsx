@@ -20,7 +20,7 @@ const navItems: NavItem[] = [
     children: [
       { label: "Chairman's Message", href: '/chairmanmessage' },
       { label: 'Board of Directors', href: '/board-of-directors' },
-      { label: 'Management Team', href: '#' },
+      { label: 'Management Team', href: '/management-team' },
     ],
   },
   {
