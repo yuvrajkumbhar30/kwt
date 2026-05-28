@@ -365,7 +365,7 @@ export default function WaterWellPage() {
             <div className="grid grid-cols-2 gap-4 mt-2">
               {[
                 { icon: Target,   label: 'Deep Expertise',    sub: '35+ years in Kuwait' },
-                { icon: Cpu,      label: 'Technology',        sub: 'Modern rig fleet' },
+                { icon: Settings,  label: 'Technology',        sub: 'Modern rig fleet' },
                 { icon: Users,    label: 'Skilled Manpower',  sub: '500+ professionals' },
                 { icon: Gauge,    label: 'Efficiency',        sub: '99% uptime record' },
               ].map((item, i) => (
