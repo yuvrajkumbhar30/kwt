@@ -12,10 +12,153 @@ import {
   Mail,
   ArrowRight,
   Quote,
+  Play,
+  X,
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/sections/footer";
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
+
+const VIDEO_URL =
+  "https://www.kdckwt.com/wp-content/uploads/2022/06/KDC-Chairman-Message-online-video-cutter.com_.mp4";
+
+function VideoSection() {
+  const [isOpen, setIsOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  function openModal() { setIsOpen(true); }
+  function closeModal() {
+    setIsOpen(false);
+    if (videoRef.current) videoRef.current.pause();
+  }
+
+  return (
+    <>
+      {/* ── FEATURED VIDEO ─────────────────────────────────────────────── */}
+      <section className="py-20 px-4 bg-slate-900 relative overflow-hidden">
+        {/* Subtle background texture */}
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, #60a5fa 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
+
+        <div className="relative z-10 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+
+            {/* Left — Video card */}
+            <div className="relative group cursor-pointer" onClick={openModal}>
+              {/* Glassmorphism card */}
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-slate-800">
+                {/* Thumbnail — first frame via the video poster */}
+                <video
+                  src={VIDEO_URL}
+                  className="w-full h-full object-cover opacity-60"
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/30 to-transparent" />
+
+                {/* Gold play button */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative flex items-center justify-center">
+                    {/* Pulse ring */}
+                    <span className="absolute w-24 h-24 rounded-full bg-amber-400/20 animate-ping" />
+                    <button
+                      aria-label="Play Chairman's Message video"
+                      className="relative w-20 h-20 rounded-full bg-amber-400 hover:bg-amber-300 transition-colors flex items-center justify-center shadow-xl group-hover:scale-110 duration-300"
+                    >
+                      <Play className="w-8 h-8 text-slate-900 ml-1" fill="currentColor" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Bottom label */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <p className="text-white/60 text-xs tracking-widest uppercase font-semibold">
+                    Watch Now
+                  </p>
+                </div>
+              </div>
+
+              {/* Decorative glow behind card */}
+              <div className="absolute -inset-1 rounded-2xl bg-blue-600/20 blur-xl -z-10 group-hover:bg-blue-500/30 transition-colors duration-500" />
+            </div>
+
+            {/* Right — Copy */}
+            <div className="flex flex-col gap-6">
+              <p className="text-blue-400 text-xs font-semibold tracking-[0.3em] uppercase">
+                From Our Chairman
+              </p>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight text-balance">
+                A Message From<br />Our Chairman
+              </h2>
+              <p className="text-slate-400 leading-relaxed text-[15px]">
+                In this exclusive address, our Chairman shares his vision for Kuwait Drilling CO. — outlining the values, strategy, and long-term commitment that have made KDC a trusted leader in the region&apos;s oilfield services industry.
+              </p>
+              <ul className="space-y-3 text-slate-300 text-sm">
+                {[
+                  "Company vision and long-term strategy",
+                  "Commitment to safety and quality",
+                  "Regional growth across Kuwait, Oman & Jordan",
+                ].map((point) => (
+                  <li key={point} className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={openModal}
+                className="inline-flex items-center gap-3 self-start mt-2 px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl transition-colors font-display tracking-wide text-sm shadow-lg"
+              >
+                <Play className="w-4 h-4" fill="currentColor" />
+                Play Chairman&apos;s Message
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── MODAL PLAYER ───────────────────────────────────────────────── */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-4"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full max-w-4xl rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={closeModal}
+              aria-label="Close video"
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 flex items-center justify-center text-white transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <video
+              ref={videoRef}
+              src={VIDEO_URL}
+              controls
+              autoPlay
+              playsInline
+              className="w-full aspect-video bg-black"
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 const HIGHLIGHTED: Record<string, { name: string; coords: [number, number] }> = {
@@ -157,6 +300,8 @@ export default function ChairmanMessagePage() {
             <div className="mt-10 w-16 h-1 bg-blue-500 rounded-full" />
           </div>
         </section>
+
+        <VideoSection />
 
         {/* ── CHAIRMAN PROFILE ─────────────────────────────────────────── */}
         <section className="py-24 px-4 bg-white">
