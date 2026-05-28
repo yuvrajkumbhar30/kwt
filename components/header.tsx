@@ -40,7 +40,7 @@ const navItems: NavItem[] = [
   {
     label: 'Careers',
     href: '#',
-    children: [{ label: 'Join Us', href: '#' }],
+    children: [{ label: 'Join Us', href: '/careers' }],
   },
   { label: 'Contact Us', href: '/contact' },
 ];
