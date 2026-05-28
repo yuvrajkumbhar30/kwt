@@ -99,7 +99,7 @@ const whyKdc = [
   { icon: Award, title: 'Experienced Workforce', desc: '35+ years of Kuwait oilfield expertise with crews fully certified to KOC and KPC operating standards.' },
   { icon: Timer, title: 'Rapid Deployment', desc: 'Pre-mobilized rig packages and standby crews enable rapid project initiation across the GCC region.' },
   { icon: Shield, title: 'Uncompromising HSE', desc: 'Zero-harm philosophy with ISO-certified QHSE management systems and dedicated safety supervisors on every job.' },
-  { icon: Target, title: 'Kuwait Market Expertise', desc: 'Unmatched knowledge of Kuwait's deep HP-HT wells, H2S exposure conditions, and regulatory requirements.' },
+  { icon: Target, title: 'Kuwait Market Expertise', desc: "Unmatched knowledge of Kuwait's deep HP-HT wells, H2S exposure conditions, and regulatory requirements." },
   { icon: ThumbsUp, title: 'Operational Reliability', desc: '99%+ equipment availability powered by rigorous maintenance programs and dedicated engineering support teams.' },
   { icon: CheckCircle2, title: 'End-to-End Support', desc: 'From well planning through completion and demobilization — KDC delivers the full service package under one roof.' },
 ];
