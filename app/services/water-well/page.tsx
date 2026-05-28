@@ -1,702 +1,873 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import {
   ChevronRight, ArrowRight, Phone, Mail, Shield, Award, Zap,
   Settings, Users, Wrench, ClipboardCheck, HardHat, Droplets,
-  BarChart3, CheckCircle2, Search, Layers, Activity, Cpu,
-  FlaskConical, Leaf, Mountain, Gauge, FileText, Globe,
+  BarChart3, CheckCircle2, Search, Layers, Activity,
+  Leaf, Mountain, Gauge, FileText, Globe,
   Target, Timer, ThumbsUp, Star, MapPin, Download, Plus, X,
-  ChevronDown,
 } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/sections/footer';
 
-/* ─── Brand tokens ───────────────────────────────────────────────── */
-const RED   = '#C0182A';   // KDC deep red
-const DARK  = '#1a1a1a';   // charcoal
+/* ─── Brand ──────────────────────────────────────────────────────────── */
+const RED  = '#C0182A';
+const DARK = '#111111';
 
-/* ─── Hooks ──────────────────────────────────────────────────────── */
-function useCountUp(target: number, duration = 2000, active = false) {
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    let start = 0;
-    const step = Math.ceil(target / (duration / 16));
-    const timer = setInterval(() => {
-      start += step;
-      if (start >= target) { setCount(target); clearInterval(timer); }
-      else setCount(start);
-    }, 16);
-    return () => clearInterval(timer);
-  }, [active, target, duration]);
-  return count;
+/* ─── Animation variants ─────────────────────────────────────────────── */
+const fadeUp = {
+  hidden:  { opacity: 0, y: 40 },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.65, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
+  }),
+};
+const fadeIn = {
+  hidden:  { opacity: 0 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    transition: { duration: 0.6, delay: i * 0.08 },
+  }),
+};
+const scaleIn = {
+  hidden:  { opacity: 0, scale: 0.9 },
+  visible: (i = 0) => ({
+    opacity: 1, scale: 1,
+    transition: { duration: 0.55, delay: i * 0.1, ease: 'easeOut' },
+  }),
+};
+
+/* ─── Reusable animation wrapper ─────────────────────────────────────── */
+function Reveal({
+  children,
+  variants = fadeUp,
+  custom = 0,
+  className = '',
+  once = true,
+}: {
+  children: React.ReactNode;
+  variants?: typeof fadeUp;
+  custom?: number;
+  className?: string;
+  once?: boolean;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once, margin: '-60px 0px' });
+  return (
+    <motion.div
+      ref={ref}
+      variants={variants}
+      initial="hidden"
+      animate={inView ? 'visible' : 'hidden'}
+      custom={custom}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
-function useInView(threshold = 0.2) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setInView(true); },
-      { threshold }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return { ref, inView };
+/* ─── Count-up ───────────────────────────────────────────────────────── */
+function CountUp({ target, suffix }: { target: number; suffix: string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <span ref={ref}>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.3 }}
+      >
+        <motion.span>
+          {inView
+            ? <AnimatedNumber target={target} />
+            : '0'}
+        </motion.span>
+        {suffix}
+      </motion.span>
+    </span>
+  );
 }
 
-/* ─── Data ───────────────────────────────────────────────────────── */
+function AnimatedNumber({ target }: { target: number }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  return (
+    <motion.span
+      ref={ref}
+      initial={{ opacity: 0 }}
+      animate={inView ? { opacity: 1 } : {}}
+    >
+      <motion.span
+        initial={0}
+        animate={inView ? target : 0}
+        transition={{ duration: 2, ease: 'easeOut' }}
+      >
+        {({ latest }: { latest: number }) => Math.floor(latest)}
+      </motion.span>
+    </motion.span>
+  );
+}
+
+/* ─── Data ───────────────────────────────────────────────────────────── */
 const heroStats = [
-  { value: 35,   suffix: '+', label: 'Years Experience' },
-  { value: 250,  suffix: '+', label: 'Wells Drilled' },
-  { value: 100,  suffix: '%', label: 'Safety Compliance' },
-  { value: 98,   suffix: '%', label: 'Project Success' },
+  { value: 35,  suffix: '+', label: 'Years Experience' },
+  { value: 250, suffix: '+', label: 'Wells Drilled' },
+  { value: 100, suffix: '%', label: 'Safety Compliance' },
+  { value: 98,  suffix: '%', label: 'Project Success' },
 ];
 
 const coreServices = [
-  { icon: Droplets,      title: 'Water Well Drilling',        desc: 'Rotary and percussion drilling to depths of 600m+ for industrial, municipal, and agricultural water supply projects across Kuwait and the GCC.' },
-  { icon: Mountain,      title: 'Water Supply Wells',         desc: 'Design, drilling, and development of high-capacity production wells for continuous water supply to industrial complexes and urban infrastructure.' },
-  { icon: Activity,      title: 'Monitoring Wells',           desc: 'Dedicated groundwater monitoring boreholes for aquifer characterization, contamination tracking, and environmental compliance programs.' },
-  { icon: Wrench,        title: 'Maintenance & Rehabilitation', desc: 'Comprehensive well rehabilitation services including mechanical brushing, chemical treatment, and pump inspection to restore yield and performance.' },
-  { icon: Gauge,         title: 'Pump Installation',          desc: 'Supply and installation of submersible and turbine pumps with full electrical commissioning, control panels, and flow metering systems.' },
-  { icon: FlaskConical,  title: 'Well Testing',               desc: 'Constant-rate pumping tests, step-drawdown tests, and water quality sampling to evaluate aquifer parameters and well efficiency.' },
-  { icon: Search,        title: 'Hydrogeological Support',    desc: 'Expert hydrogeological assessment including geophysical surveys, borehole logging, and aquifer yield mapping for project feasibility.' },
-  { icon: HardHat,       title: 'Site Preparation',           desc: 'Full site civil works including access roads, pad construction, sumps, and casing handling areas to mobilization-ready standard.' },
-  { icon: Cpu,           title: 'Inspection & Logging',       desc: 'CCTV borehole inspection, caliper surveys, and geophysical logging to assess well condition, screen integrity, and sediment build-up.' },
-  { icon: Leaf,          title: 'Environmental Support',      desc: 'Environmental baseline studies, effluent management, cuttings disposal, and post-drilling site restoration to regulatory standards.' },
+  { icon: Droplets,      title: 'Water Well Drilling',         desc: 'Rotary and percussion drilling to 600m+ for industrial, municipal, and agricultural projects across Kuwait and the GCC.' },
+  { icon: Globe,         title: 'Water Supply Wells',          desc: 'End-to-end supply well solutions delivering reliable groundwater for industrial facilities and communities.' },
+  { icon: Activity,      title: 'Monitoring Wells',            desc: 'Scientific installation and data-logging for hydrogeological monitoring, environmental compliance, and aquifer study.' },
+  { icon: Wrench,        title: 'Maintenance & Rehabilitation', desc: 'Full-cycle well maintenance, rehabilitation, and redevelopment to restore production capacity and extend well life.' },
+  { icon: Settings,      title: 'Pump Installation',           desc: 'Supply, installation, and commissioning of submersible pumps, surface pumps, and associated control systems.' },
+  { icon: Gauge,         title: 'Well Testing',                desc: 'Comprehensive pumping tests, step-rate tests, and aquifer analysis to confirm well performance and yield.' },
+  { icon: Search,        title: 'Hydrogeological Support',     desc: 'Expert geological assessment, groundwater modelling, and site-suitability analysis before mobilisation.' },
+  { icon: Mountain,      title: 'Site Preparation',            desc: 'Access road construction, site clearing, casing delivery logistics, and civil works ahead of drilling.' },
+  { icon: ClipboardCheck,title: 'Inspection & Logging',        desc: 'Down-hole camera surveys, geophysical logging, and casing integrity tests throughout the well lifecycle.' },
+  { icon: Leaf,          title: 'Environmental Support',       desc: 'Water quality sampling, contamination assessment, regulatory compliance documentation, and remediation advisory.' },
 ];
 
 const processSteps = [
-  { num: '01', title: 'Site Survey',    icon: Search,        desc: 'Geophysical survey, hydrogeological mapping, and site feasibility assessment to determine optimal drill location and expected yield.' },
-  { num: '02', title: 'Planning',       icon: FileText,      desc: 'Well design, casing programme, drilling fluid selection, and HSE risk assessment with full stakeholder alignment.' },
-  { num: '03', title: 'Drilling',       icon: Droplets,      desc: 'Rotary or cable percussion drilling using certified rigs, with real-time monitoring of formation, yield, and water quality indicators.' },
-  { num: '04', title: 'Installation',   icon: Settings,      desc: 'Well casing, screen and gravel pack installation, pump and control panel commissioning to specification.' },
-  { num: '05', title: 'Testing',        icon: Gauge,         desc: 'Pumping tests, water quality sampling, yield verification, and full performance documentation for client handover.' },
-  { num: '06', title: 'Maintenance',    icon: Wrench,        desc: 'Scheduled preventive maintenance, annual inspection, rehabilitation when required, and 24/7 emergency response.' },
+  { num: '01', title: 'Site Survey',    desc: 'Hydrogeological assessment, geophysical survey, and permit acquisition.' },
+  { num: '02', title: 'Planning',       desc: 'Engineering design, casing programme, drill-bit selection, and logistics mobilisation.' },
+  { num: '03', title: 'Drilling',       desc: 'Execution with advanced rotary rigs, real-time monitoring, and daily reporting.' },
+  { num: '04', title: 'Installation',   desc: 'Casing, screen, and gravel-pack installation with precision alignment.' },
+  { num: '05', title: 'Testing',        desc: 'Step-rate and constant-rate pumping tests with yield and water-quality analysis.' },
+  { num: '06', title: 'Maintenance',    desc: 'Scheduled inspections, pump servicing, and rehabilitation over the well lifetime.' },
 ];
 
 const equipment = [
-  { title: 'Rotary Drilling Rigs',       spec: 'Up to 600 m depth capacity', badge: 'Advanced Technology', icon: Layers },
-  { title: 'Cable Tool Percussion Rigs', spec: 'Hard rock & overburden drilling', badge: 'High Efficiency',     icon: Zap },
-  { title: 'Submersible Pump Units',     spec: '2" – 20" diameter, variable flow',badge: 'Safety Certified',    icon: Gauge },
-  { title: 'Geophysical Survey Tools',   spec: 'ERT, seismic, and EM methods',  badge: 'Advanced Technology', icon: Activity },
-  { title: 'Borehole Camera Systems',    spec: 'HD CCTV to 600 m depth',         badge: 'High Efficiency',     icon: Cpu },
-  { title: 'Water Quality Analysers',    spec: 'Real-time field laboratory',      badge: 'Safety Certified',    icon: FlaskConical },
+  { title: 'Rotary Drilling Rigs',    spec: 'Capacity to 800m', badge: 'Advanced Technology',  desc: 'Top-drive rotary rigs with automated pipe-handling and real-time WOB/RPM control.' },
+  { title: 'Air Rotary Systems',      spec: 'DTH up to 600m',   badge: 'High Efficiency',       desc: 'Down-the-hole hammer systems for high-penetration-rate drilling in hard rock formations.' },
+  { title: 'Submersible Pump Fleet',  spec: 'Up to 250kW',      badge: 'Safety Certified',      desc: 'Factory-tested electric submersible pump packages with variable-speed drives.' },
+  { title: 'Down-Hole Logging Tools', spec: 'Gamma / Resistivity',badge: 'Advanced Technology', desc: 'Wireline formation evaluation including gamma ray, resistivity, and caliper logging.' },
 ];
 
-const safetyKpis = [
-  { label: 'Zero Harm Vision',     value: 0,   suffix: ' LTI', desc: 'Lost time incidents in the past 5 years' },
-  { label: 'Safety Compliance',    value: 100, suffix: '%',    desc: 'Adherence to ISO 9001 & OSHAS 18001' },
-  { label: 'Trained Workforce',    value: 500, suffix: '+',    desc: 'IWCF and KOC-certified personnel' },
-  { label: 'Operational Reliability', value: 98, suffix: '%',  desc: 'Equipment uptime and availability' },
+const safetyKPIs = [
+  { value: 0,    suffix: '',  label: 'Lost-Time Incidents',   sub: 'Zero Harm Vision' },
+  { value: 100,  suffix: '%', label: 'Safety Compliance',     sub: 'All Active Sites' },
+  { value: 500,  suffix: '+', label: 'Trained Workforce',     sub: 'Certified Professionals' },
+  { value: 99,   suffix: '%', label: 'Operational Reliability', sub: 'Equipment Uptime' },
 ];
 
-const gallery = [
-  { src: '/images/ww-gallery-1.png', label: 'Desert Drilling Operations',   size: 'large' },
-  { src: '/images/ww-gallery-2.png', label: 'Pump Installation & Testing',  size: 'small' },
-  { src: '/images/ww-gallery-3.png', label: 'Well Infrastructure Network',  size: 'small' },
-  { src: '/images/ww-gallery-4.png', label: 'Flow Rate Testing',            size: 'small' },
-  { src: '/images/ww-gallery-5.png', label: 'Site Survey & Assessment',     size: 'small' },
-  { src: '/images/ww-gallery-6.png', label: 'Night Drilling Operations',    size: 'large' },
+const galleryImages = [
+  { src: '/images/ww-gallery-1.png', label: 'Rig Operations, Kuwait' },
+  { src: '/images/ww-gallery-2.png', label: 'Pump Installation' },
+  { src: '/images/ww-gallery-3.png', label: 'Completed Infrastructure' },
+  { src: '/images/ww-gallery-4.png', label: 'Well Testing' },
+  { src: '/images/ww-gallery-5.png', label: 'Site Survey & Assessment' },
+  { src: '/images/ww-gallery-6.png', label: 'Night Operations' },
 ];
 
-const whyKdc = [
-  { icon: Users,         title: 'Experienced Workforce',  desc: '35+ years of deep domain expertise in arid-region water well drilling with certified IWCF and KOC-approved personnel.' },
-  { icon: Layers,        title: 'Advanced Equipment',     desc: 'Modern rotary and percussion rig fleet maintained to OEM specifications with full spares inventory.' },
-  { icon: ThumbsUp,      title: 'Reliable Operations',    desc: '98% project success rate and 99%+ equipment availability powered by rigorous maintenance programs.' },
-  { icon: Globe,         title: 'Regional Expertise',     desc: 'Proven performance across Kuwait, Oman, Jordan, and wider GCC — deep knowledge of regional aquifer conditions.' },
-  { icon: Shield,        title: 'Safety Commitment',      desc: 'Zero LTI over 5 years. ISO 9001 and OSHAS 18001 certified. HSE embedded at every operational level.' },
-  { icon: Star,          title: 'Client Satisfaction',    desc: 'Repeat contracts with Kuwait Oil Company, Ministry of Electricity & Water, and major international operators.' },
+const whyKDC = [
+  { icon: Users,       title: 'Experienced Workforce',  desc: '500+ certified professionals with decades of Kuwait and GCC water-well expertise.' },
+  { icon: Zap,         title: 'Advanced Equipment',     desc: 'Modern rig fleet capable of drilling to 800m with real-time monitoring systems.' },
+  { icon: Timer,       title: 'Reliable Operations',    desc: '99% equipment availability and rapid mobilisation within 72 hours for urgent projects.' },
+  { icon: MapPin,      title: 'Regional Expertise',     desc: 'Deep knowledge of Kuwait geology, regulatory frameworks, and aquifer conditions.' },
+  { icon: Shield,      title: 'Safety Commitment',      desc: 'Zero-harm culture underpinned by ISO-certified QHSE systems and daily safety audits.' },
+  { icon: ThumbsUp,    title: 'Client Satisfaction',    desc: '20+ long-term government and industrial clients returning for successive projects.' },
 ];
 
 const relatedServices = [
-  { title: 'Drilling & Workover',    href: '/services/drilling-workover', icon: HardHat,      desc: 'Full-service drilling and workover operations for oil and gas wells.' },
-  { title: 'Directional Drilling',   href: '#',                           icon: Target,       desc: 'Precision directional and horizontal drilling with MWD/LWD technology.' },
-  { title: 'BHA Rental',             href: '#',                           icon: Settings,     desc: 'Complete bottom hole assembly equipment rental and support.' },
-  { title: 'Fishing Services',       href: '#',                           icon: Award,        desc: 'Wellbore remediation and stuck pipe recovery operations.' },
+  { title: 'Drilling & Workover', href: '/services/drilling-workover', icon: Activity },
+  { title: 'Directional Drilling', href: '#', icon: Target },
+  { title: 'BHA Rental',           href: '#', icon: Layers },
+  { title: 'Fishing Services',     href: '#', icon: Search },
 ];
 
-/* ─── Sub-components ─────────────────────────────────────────────── */
-function StatCard({ value, suffix, label, active }: { value: number; suffix: string; label: string; active: boolean }) {
-  const count = useCountUp(value, 1800, active);
-  return (
-    <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl px-6 py-5 text-center min-w-[130px]">
-      <div className="text-3xl font-bold text-white font-display">
-        {count}{suffix}
-      </div>
-      <div className="text-white/70 text-xs mt-1 tracking-wide uppercase">{label}</div>
-    </div>
-  );
-}
-
-function ServiceCard({ svc }: { svc: typeof coreServices[0] }) {
-  const [open, setOpen] = useState(false);
-  const Icon = svc.icon;
-  return (
-    <div
-      className="group relative bg-white border border-slate-200 rounded-2xl p-6 flex flex-col gap-4
-                 hover:border-red-300 hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden"
-      onClick={() => setOpen(!open)}
-    >
-      {/* Red top accent */}
-      <div className="absolute top-0 left-0 right-0 h-0.5 bg-red-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-
-      <div
-        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
-        style={{ backgroundColor: open ? RED : '#fef2f2' }}
-      >
-        <Icon className={`w-6 h-6 transition-colors duration-300 ${open ? 'text-white' : 'text-red-600'}`} />
-      </div>
-
-      <div>
-        <h3 className="font-display text-lg font-bold text-slate-900 mb-1">{svc.title}</h3>
-        <div
-          className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-40 opacity-100' : 'max-h-0 opacity-0'}`}
-        >
-          <p className="text-slate-600 text-sm leading-relaxed mb-3">{svc.desc}</p>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-1 text-red-600 text-sm font-semibold mt-auto">
-        <span>{open ? 'Show Less' : 'Learn More'}</span>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
-      </div>
-    </div>
-  );
-}
-
-function EquipmentCard({ item }: { item: typeof equipment[0] }) {
-  const Icon = item.icon;
-  const badgeColor = item.badge === 'Advanced Technology' ? 'bg-blue-500/20 text-blue-300'
-    : item.badge === 'High Efficiency' ? 'bg-amber-500/20 text-amber-300'
-    : 'bg-green-500/20 text-green-300';
-  return (
-    <div className="group bg-white/5 border border-white/10 rounded-2xl p-6 hover:bg-white/10 hover:border-white/20 transition-all duration-300">
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-12 h-12 rounded-xl bg-red-600/20 flex items-center justify-center group-hover:bg-red-600 transition-colors duration-300">
-          <Icon className="w-6 h-6 text-red-400 group-hover:text-white transition-colors duration-300" />
-        </div>
-        <span className={`text-xs font-semibold px-3 py-1 rounded-full ${badgeColor}`}>{item.badge}</span>
-      </div>
-      <h3 className="font-display text-lg font-bold text-white mb-2">{item.title}</h3>
-      <p className="text-slate-400 text-sm">{item.spec}</p>
-    </div>
-  );
-}
-
-function SafetyCounter({ item, active }: { item: typeof safetyKpis[0]; active: boolean }) {
-  const count = useCountUp(item.value, 2000, active);
-  return (
-    <div className="text-center">
-      <div className="text-5xl font-display font-bold mb-1" style={{ color: RED }}>
-        {count}{item.suffix}
-      </div>
-      <div className="text-white font-semibold text-lg mb-1">{item.label}</div>
-      <div className="text-slate-400 text-sm">{item.desc}</div>
-    </div>
-  );
-}
-
-/* ─── Page ───────────────────────────────────────────────────────── */
+/* ════════════════════════════════════════════════════════════════════════
+   PAGE
+═══════════════════════════════════════════════════════════════════════ */
 export default function WaterWellPage() {
-  const heroRef  = useRef<HTMLDivElement>(null);
-  const statsRef = useInView(0.3);
-  const safetyRef = useInView(0.3);
   const [lightbox, setLightbox] = useState<string | null>(null);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
+
+  /* parallax on hero image */
+  const heroRef = useRef(null);
+  const { scrollY } = useScroll();
+  const heroY = useTransform(scrollY, [0, 600], [0, 120]);
 
   return (
     <>
       <Header />
 
-      {/* ── 1. HERO ────────────────────────────────────────────────── */}
-      <section
-        ref={heroRef}
-        className="relative min-h-[92vh] flex flex-col justify-end overflow-hidden"
-      >
-        {/* Background image */}
-        <img
-          src="/images/ww-hero.png"
-          alt="Water Well Drilling Operations"
-          className="absolute inset-0 w-full h-full object-cover object-center"
+      {/* ── 1. HERO ──────────────────────────────────────────────────── */}
+      <section ref={heroRef} className="relative h-screen min-h-[680px] overflow-hidden flex items-center">
+        {/* Parallax background */}
+        <motion.div className="absolute inset-0" style={{ y: heroY }}>
+          <img
+            src="/images/ww-hero.png"
+            alt="Water Well Operations"
+            className="w-full h-full object-cover scale-110"
+          />
+        </motion.div>
+
+        {/* Overlay — left-heavy gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+        {/* Red accent line */}
+        <motion.div
+          className="absolute top-0 left-0 h-1 bg-red-700"
+          initial={{ width: 0 }}
+          animate={{ width: '35%' }}
+          transition={{ duration: 1.2, delay: 0.4, ease: 'easeOut' }}
+          style={{ backgroundColor: RED }}
         />
-        {/* Dark gradient — bottom-heavy for text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/20" />
-        {/* Red left accent strip */}
-        <div className="absolute left-0 top-0 bottom-0 w-1.5" style={{ backgroundColor: RED }} />
 
-        {/* Breadcrumb */}
-        <div className="absolute top-6 left-6 md:left-12 flex items-center gap-2 text-white/60 text-sm z-10">
-          <Link href="/" className="hover:text-white transition-colors">Home</Link>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-white/40">Services</span>
-          <ChevronRight className="w-3.5 h-3.5" />
-          <span className="text-white">Water Well</span>
-        </div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full">
+          <div className="max-w-3xl">
+            {/* Eyebrow */}
+            <Reveal custom={0}>
+              <div className="flex items-center gap-3 mb-6">
+                <span className="w-8 h-px bg-red-500" style={{ backgroundColor: RED }} />
+                <span className="text-xs tracking-[0.35em] uppercase font-semibold text-white/70">
+                  KDC Services
+                </span>
+              </div>
+            </Reveal>
 
-        {/* Hero content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pb-16 w-full">
-          <div className="mb-3 flex items-center gap-3">
-            <div className="w-10 h-0.5" style={{ backgroundColor: RED }} />
-            <span className="text-red-400 text-xs font-bold tracking-[0.3em] uppercase">KDC Water Well Division</span>
-          </div>
+            {/* Headline */}
+            <Reveal custom={1}>
+              <h1 className="font-display text-6xl md:text-8xl font-bold text-white leading-none tracking-tight text-balance">
+                Water Well<br />
+                <span style={{ color: RED }}>Services</span>
+              </h1>
+            </Reveal>
 
-          <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-none text-balance mb-5 tracking-tight">
-            Water Well<br />
-            <span style={{ color: RED }}>Services</span>
-          </h1>
+            <Reveal custom={2}>
+              <p className="mt-6 text-white/75 text-lg md:text-xl leading-relaxed max-w-xl">
+                Kuwait&apos;s most trusted partner for precision groundwater drilling, pump installation, and long-term well management across industrial and government sectors.
+              </p>
+            </Reveal>
 
-          <p className="text-white/80 text-lg md:text-xl max-w-2xl leading-relaxed mb-8">
-            Kuwait Drilling CO. delivers world-class water well drilling, pump installation, and well maintenance services across the GCC — combining 35+ years of operational expertise with cutting-edge technology to secure vital water resources for industry and infrastructure.
-          </p>
-
-          <div className="flex flex-wrap gap-4 mb-12">
-            <Link
-              href="/contact"
-              className="px-8 py-3.5 font-bold text-white rounded-lg text-sm transition-colors"
-              style={{ backgroundColor: RED }}
-            >
-              Contact Us
-            </Link>
-            <Link
-              href="/contact"
-              className="px-8 py-3.5 font-bold text-white rounded-lg text-sm border border-white/30 hover:bg-white/10 transition-colors"
-            >
-              Request Proposal
-            </Link>
-          </div>
-
-          {/* Stats strip */}
-          <div ref={statsRef.ref} className="flex flex-wrap gap-4">
-            {heroStats.map((s) => (
-              <StatCard key={s.label} {...s} active={statsRef.inView} />
-            ))}
+            {/* CTAs */}
+            <Reveal custom={3}>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2 px-8 py-4 font-semibold text-white rounded-lg text-sm tracking-wide transition-all duration-300"
+                  style={{ backgroundColor: RED }}
+                >
+                  Contact Us
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-8 py-4 font-semibold text-white rounded-lg text-sm tracking-wide border border-white/30 hover:bg-white/10 transition-all duration-300"
+                >
+                  Request Proposal
+                  <FileText className="w-4 h-4" />
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </div>
-      </section>
 
-      {/* ── 2. INTRODUCTION ─────────────────────────────────────────── */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          {/* Left — image */}
-          <div className="relative">
-            <img
-              src="/images/ww-overview.png"
-              alt="Water well drilling operations in Kuwait"
-              className="w-full rounded-2xl shadow-2xl object-cover aspect-[4/3]"
-            />
-            {/* Floating badge */}
-            <div className="absolute -bottom-6 -right-6 hidden md:flex bg-white rounded-2xl shadow-xl p-5 border border-slate-100 flex-col items-center gap-1 min-w-[130px]">
-              <Droplets className="w-7 h-7" style={{ color: RED }} />
-              <span className="font-display text-2xl font-bold text-slate-900">250+</span>
-              <span className="text-xs text-slate-500 text-center">Wells Drilled</span>
-            </div>
-            {/* Red corner accent */}
-            <div className="absolute -top-4 -left-4 w-16 h-16 rounded-tl-2xl border-t-4 border-l-4" style={{ borderColor: RED }} />
-          </div>
-
-          {/* Right — content */}
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase" style={{ color: RED }}>Overview</span>
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight text-balance">
-              Securing Water Resources for the GCC
-            </h2>
-            <p className="text-slate-600 leading-relaxed">
-              As one of the region&apos;s most experienced water well drilling contractors, KDC brings a rare combination of subsurface expertise, modern rig technology, and deep familiarity with Kuwait&apos;s geological formations to every project we undertake.
-            </p>
-            <p className="text-slate-600 leading-relaxed">
-              Our multidisciplinary teams handle the entire project lifecycle — from hydrogeological survey and site preparation through drilling, pump installation, well testing, and long-term maintenance — ensuring water supply security for government, industrial, and agricultural clients.
-            </p>
-
-            {/* Four highlights */}
-            <div className="grid grid-cols-2 gap-4 mt-2">
-              {[
-                { icon: Award,          label: 'Deep Expertise',          sub: '35+ years in arid environments' },
-                { icon: Cpu,            label: 'Modern Technology',       sub: 'Latest rotary & percussion rigs' },
-                { icon: Users,          label: 'Skilled Manpower',        sub: 'IWCF & KOC-certified crews' },
-                { icon: BarChart3,      label: 'Operational Efficiency',  sub: '98% project completion rate' },
-              ].map(({ icon: Icon, label, sub }) => (
-                <div key={label} className="flex items-start gap-3 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#fef2f2' }}>
-                    <Icon className="w-5 h-5" style={{ color: RED }} />
+        {/* Stats strip */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <div className="max-w-7xl mx-auto px-6 md:px-12">
+            <motion.div
+              className="grid grid-cols-2 md:grid-cols-4 border-t border-white/10"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.9 }}
+            >
+              {heroStats.map((s) => (
+                <div
+                  key={s.label}
+                  className="py-6 px-6 border-r border-white/10 last:border-r-0 backdrop-blur-sm bg-black/30"
+                >
+                  <div className="font-display text-3xl md:text-4xl font-bold text-white">
+                    {s.value}{s.suffix}
                   </div>
-                  <div>
-                    <div className="font-bold text-slate-900 text-sm">{label}</div>
-                    <div className="text-slate-500 text-xs mt-0.5">{sub}</div>
-                  </div>
+                  <div className="text-white/55 text-xs mt-1 tracking-wide">{s.label}</div>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ── 3. CORE SERVICES GRID ───────────────────────────────────── */}
-      <section className="py-24 px-6" style={{ backgroundColor: '#f8f8f8' }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase" style={{ color: RED }}>What We Do</span>
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-4">Core Services</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              From initial hydrogeological survey to long-term maintenance, our full-spectrum water well services cover every phase of the project lifecycle.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
-            {coreServices.map((svc) => (
-              <ServiceCard key={svc.title} svc={svc} />
-            ))}
-          </div>
+      {/* ── Breadcrumb ───────────────────────────────────────────────── */}
+      <div className="bg-stone-50 border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-3 flex items-center gap-2 text-xs text-stone-500">
+          <Link href="/" className="hover:text-stone-800 transition-colors">Home</Link>
+          <ChevronRight className="w-3 h-3" />
+          <span className="text-stone-400">Services</span>
+          <ChevronRight className="w-3 h-3" />
+          <span className="font-medium text-stone-800">Water Well Services</span>
         </div>
-      </section>
+      </div>
 
-      {/* ── 4. OPERATIONAL CAPABILITIES / PROCESS ───────────────────── */}
-      <section className="py-24 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase" style={{ color: RED }}>How We Work</span>
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-4">Operational Process</h2>
-            <p className="text-slate-600 max-w-xl mx-auto">A disciplined six-stage workflow ensuring every well is delivered on time, to spec, and to the highest safety standards.</p>
-          </div>
-
-          {/* Horizontal steps */}
-          <div className="relative">
-            {/* Connecting line (desktop) */}
-            <div className="hidden lg:block absolute top-[52px] left-[calc(8.33%+28px)] right-[calc(8.33%+28px)] h-0.5 bg-slate-200 z-0" />
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {processSteps.map((step, i) => {
-                const Icon = step.icon;
-                return (
-                  <div key={step.num} className="relative z-10 flex flex-col items-center text-center gap-3">
-                    {/* Step bubble */}
-                    <div
-                      className="w-14 h-14 rounded-full flex items-center justify-center border-2 bg-white font-display text-xl font-bold shadow-md"
-                      style={{ borderColor: RED, color: RED }}
-                    >
-                      {i + 1}
-                    </div>
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: '#fef2f2' }}>
-                      <Icon className="w-5 h-5" style={{ color: RED }} />
-                    </div>
-                    <h3 className="font-display text-base font-bold text-slate-900">{step.title}</h3>
-                    <p className="text-slate-500 text-xs leading-relaxed">{step.desc}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 5. EQUIPMENT & TECHNOLOGY ───────────────────────────────── */}
-      <section className="py-24 px-6" style={{ backgroundColor: DARK }}>
-        {/* Background image overlay */}
-        <div className="absolute inset-0 pointer-events-none opacity-10 overflow-hidden">
-          <img src="/images/ww-equipment.png" alt="" className="w-full h-full object-cover" aria-hidden />
-        </div>
-
-        <div className="relative max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-red-400">Our Fleet</span>
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">Equipment & Technology</h2>
-            <p className="text-slate-400 max-w-xl mx-auto">
-              KDC deploys a modern, fully certified fleet of water well drilling and testing equipment, maintained to OEM standards for maximum reliability in harsh desert conditions.
-            </p>
-          </div>
-
-          {/* Full-width equipment image */}
-          <div className="relative rounded-2xl overflow-hidden mb-12 shadow-2xl">
-            <img
-              src="/images/ww-equipment.png"
-              alt="KDC water well drilling equipment"
-              className="w-full aspect-[21/6] object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
-            <div className="absolute inset-0 flex items-center px-10">
-              <div className="max-w-md">
-                <p className="text-white/60 text-xs font-bold tracking-widest uppercase mb-2">KDC Fleet</p>
-                <h3 className="font-display text-3xl font-bold text-white mb-3">Modern Certified Rig Fleet</h3>
-                <p className="text-white/70 text-sm leading-relaxed">All equipment maintained to API, ISO, and manufacturer specifications with full traceability documentation available on request.</p>
+      {/* ── 2. INTRODUCTION ──────────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          {/* Image collage */}
+          <Reveal variants={fadeIn}>
+            <div className="relative grid grid-cols-2 gap-3 h-[520px]">
+              <div className="col-span-2 rounded-2xl overflow-hidden h-64">
+                <img src="/images/ww-hero.png" alt="Drilling operations" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
+              <div className="rounded-2xl overflow-hidden">
+                <img src="/images/ww-overview.png" alt="Site preparation" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              <div className="rounded-2xl overflow-hidden">
+                <img src="/images/ww-gallery-4.png" alt="Well testing" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              {/* Floating badge */}
+              <motion.div
+                className="absolute -bottom-5 -right-5 bg-white rounded-2xl shadow-2xl p-5 flex items-center gap-4 border border-stone-100"
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: RED }}>
+                  <Star className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-display font-bold text-xl text-stone-900">ISO Certified</div>
+                  <div className="text-stone-500 text-xs">QHSE Management</div>
+                </div>
+              </motion.div>
+            </div>
+          </Reveal>
+
+          {/* Copy */}
+          <div className="flex flex-col gap-6">
+            <Reveal custom={0}>
+              <div className="flex items-center gap-3">
+                <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+                <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>
+                  Our Expertise
+                </span>
+              </div>
+            </Reveal>
+            <Reveal custom={1}>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-stone-900 leading-tight text-balance">
+                Precision Groundwater Solutions for Critical Infrastructure
+              </h2>
+            </Reveal>
+            <Reveal custom={2}>
+              <p className="text-stone-600 leading-relaxed">
+                With over 35 years drilling in Kuwait&apos;s demanding geological conditions, KDC delivers water well solutions that government agencies, industrial operators, and infrastructure developers can depend on. From initial hydrogeological survey through to long-term maintenance, our integrated service model eliminates the complexity of managing multiple contractors.
+              </p>
+            </Reveal>
+
+            {/* Highlight grid */}
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              {[
+                { icon: Target,   label: 'Deep Expertise',    sub: '35+ years in Kuwait' },
+                { icon: Cpu,      label: 'Technology',        sub: 'Modern rig fleet' },
+                { icon: Users,    label: 'Skilled Manpower',  sub: '500+ professionals' },
+                { icon: Gauge,    label: 'Efficiency',        sub: '99% uptime record' },
+              ].map((item, i) => (
+                <Reveal key={item.label} custom={i * 0.5}>
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-stone-50 border border-stone-100 hover:border-red-200 hover:bg-red-50/30 transition-colors duration-300">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: `${RED}18` }}>
+                      <item.icon className="w-4 h-4" style={{ color: RED }} />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-stone-900 text-sm">{item.label}</div>
+                      <div className="text-stone-500 text-xs mt-0.5">{item.sub}</div>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {equipment.map((item) => (
-              <EquipmentCard key={item.title} item={item} />
+      {/* ── 3. CORE SERVICES ─────────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 bg-stone-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <Reveal custom={0}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>What We Do</span>
+                </div>
+              </Reveal>
+              <Reveal custom={1}>
+                <h2 className="font-display text-4xl md:text-5xl font-bold text-stone-900">Core Services</h2>
+              </Reveal>
+            </div>
+            <Reveal custom={2}>
+              <p className="text-stone-500 max-w-md text-sm leading-relaxed">
+                A comprehensive portfolio covering every phase of the water well lifecycle — from exploration to long-term asset management.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            {coreServices.map((svc, i) => (
+              <Reveal key={svc.title} custom={i * 0.05} variants={scaleIn}>
+                <motion.div
+                  className="group relative bg-white rounded-2xl p-6 border border-stone-200 cursor-pointer overflow-hidden h-full flex flex-col"
+                  whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+                  transition={{ duration: 0.25 }}
+                  onClick={() => setActiveCard(activeCard === i ? null : i)}
+                >
+                  {/* Red top accent on hover */}
+                  <motion.div
+                    className="absolute top-0 left-0 right-0 h-0.5"
+                    style={{ backgroundColor: RED }}
+                    initial={{ scaleX: 0 }}
+                    whileHover={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4 flex-shrink-0"
+                    style={{ backgroundColor: `${RED}14` }}>
+                    <svc.icon className="w-5 h-5" style={{ color: RED }} />
+                  </div>
+
+                  <h3 className="font-display font-bold text-stone-900 text-base mb-2 leading-snug">{svc.title}</h3>
+
+                  <AnimatePresence>
+                    {activeCard === i ? (
+                      <motion.p
+                        key="desc"
+                        className="text-stone-500 text-xs leading-relaxed flex-1"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        {svc.desc}
+                      </motion.p>
+                    ) : (
+                      <p className="text-stone-400 text-xs line-clamp-2 leading-relaxed flex-1">{svc.desc}</p>
+                    )}
+                  </AnimatePresence>
+
+                  <div className="mt-4 flex items-center gap-1 text-xs font-semibold" style={{ color: RED }}>
+                    {activeCard === i ? (
+                      <><X className="w-3 h-3" /> Close</>
+                    ) : (
+                      <><Plus className="w-3 h-3" /> Learn More</>
+                    )}
+                  </div>
+                </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 6. SAFETY & QUALITY ─────────────────────────────────────── */}
-      <section ref={safetyRef.ref} className="py-24 px-6 bg-white">
+      {/* ── 4. PROCESS ───────────────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            {/* Left — counters + badges */}
-            <div className="grid grid-cols-2 gap-8">
-              {safetyKpis.map((item) => (
-                <SafetyCounter key={item.label} item={item} active={safetyRef.inView} />
-              ))}
+          <Reveal custom={0}>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+              <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>How We Work</span>
+            </div>
+          </Reveal>
+          <Reveal custom={1}>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-stone-900 mb-16">Operational Process</h2>
+          </Reveal>
 
-              {/* Certification badges */}
-              <div className="col-span-2 flex flex-wrap gap-3 mt-4">
-                {['ISO 9001:2015', 'OSHAS 18001', 'API Q1', 'KOC Approved', 'MOW Certified'].map((cert) => (
-                  <span
-                    key={cert}
-                    className="px-4 py-2 rounded-full text-sm font-bold border-2 text-red-700 bg-red-50"
-                    style={{ borderColor: RED }}
+          {/* Desktop horizontal steps */}
+          <div className="hidden md:block relative">
+            {/* Connecting line */}
+            <Reveal variants={fadeIn}>
+              <div className="absolute top-8 left-0 right-0 h-px bg-stone-200 mx-16" />
+            </Reveal>
+
+            <div className="grid grid-cols-6 gap-4">
+              {processSteps.map((step, i) => (
+                <Reveal key={step.num} custom={i * 0.15} variants={fadeUp}>
+                  <motion.div
+                    className="relative flex flex-col items-center text-center group"
+                    whileHover={{ y: -4 }}
                   >
+                    {/* Number bubble */}
+                    <motion.div
+                      className="relative z-10 w-16 h-16 rounded-full border-2 flex items-center justify-center mb-5 font-display font-bold text-lg transition-all duration-300 bg-white"
+                      style={{ borderColor: RED, color: RED }}
+                      whileHover={{ backgroundColor: RED, color: '#fff' }}
+                    >
+                      {step.num}
+                    </motion.div>
+                    <h3 className="font-display font-bold text-stone-900 text-sm mb-2">{step.title}</h3>
+                    <p className="text-stone-500 text-xs leading-relaxed">{step.desc}</p>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile vertical steps */}
+          <div className="md:hidden flex flex-col gap-6">
+            {processSteps.map((step, i) => (
+              <Reveal key={step.num} custom={i * 0.1}>
+                <div className="flex gap-5">
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 rounded-full border-2 flex items-center justify-center font-display font-bold text-sm flex-shrink-0"
+                      style={{ borderColor: RED, color: RED }}>
+                      {step.num}
+                    </div>
+                    {i < processSteps.length - 1 && <div className="w-px flex-1 mt-3" style={{ backgroundColor: `${RED}30` }} />}
+                  </div>
+                  <div className="pb-6">
+                    <h3 className="font-display font-bold text-stone-900 mb-1">{step.title}</h3>
+                    <p className="text-stone-500 text-sm leading-relaxed">{step.desc}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. EQUIPMENT & TECHNOLOGY ────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12" style={{ backgroundColor: DARK }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div>
+              <Reveal custom={0}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Our Fleet</span>
+                </div>
+              </Reveal>
+              <Reveal custom={1}>
+                <h2 className="font-display text-4xl md:text-5xl font-bold text-white">Equipment &amp; Technology</h2>
+              </Reveal>
+            </div>
+            <Reveal custom={2}>
+              <p className="text-white/50 max-w-md text-sm leading-relaxed">
+                A modern, fully-maintained fleet built for Kuwait&apos;s demanding geological and environmental conditions.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="mb-12 rounded-2xl overflow-hidden h-64 md:h-80">
+            <motion.img
+              src="/images/ww-equipment.png"
+              alt="Equipment fleet"
+              className="w-full h-full object-cover"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.6 }}
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {equipment.map((eq, i) => (
+              <Reveal key={eq.title} custom={i * 0.1} variants={scaleIn}>
+                <motion.div
+                  className="bg-white/5 rounded-2xl p-6 border border-white/8 hover:border-red-800/60 hover:bg-white/8 transition-all duration-300 flex flex-col gap-4"
+                  whileHover={{ y: -4 }}
+                >
+                  <span className="inline-block self-start text-xs font-bold px-3 py-1 rounded-full border"
+                    style={{ color: RED, borderColor: `${RED}50`, backgroundColor: `${RED}15` }}>
+                    {eq.badge}
+                  </span>
+                  <div>
+                    <div className="font-display font-bold text-white text-lg mb-1">{eq.title}</div>
+                    <div className="text-white/40 text-xs mb-3">{eq.spec}</div>
+                    <p className="text-white/60 text-sm leading-relaxed">{eq.desc}</p>
+                  </div>
+                </motion.div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. SAFETY & QUALITY ──────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          {/* KPIs */}
+          <div>
+            <Reveal custom={0}>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+                <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Safety First</span>
+              </div>
+            </Reveal>
+            <Reveal custom={1}>
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-stone-900 mb-8">Zero Harm.<br />Zero Compromise.</h2>
+            </Reveal>
+
+            <div className="grid grid-cols-2 gap-4">
+              {safetyKPIs.map((kpi, i) => (
+                <Reveal key={kpi.label} custom={i * 0.1}>
+                  <div className="p-6 rounded-2xl border border-stone-200 bg-stone-50">
+                    <div className="font-display text-4xl font-bold mb-1" style={{ color: RED }}>
+                      {kpi.value}{kpi.suffix}
+                    </div>
+                    <div className="font-semibold text-stone-900 text-sm">{kpi.label}</div>
+                    <div className="text-stone-400 text-xs mt-1">{kpi.sub}</div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            {/* Certification badges */}
+            <Reveal custom={4}>
+              <div className="flex flex-wrap gap-3 mt-8">
+                {['ISO 9001:2015', 'ISO 14001', 'OHSAS 18001', 'KOC Approved'].map((cert) => (
+                  <span key={cert}
+                    className="px-4 py-1.5 rounded-full text-xs font-bold border"
+                    style={{ color: RED, borderColor: `${RED}50`, backgroundColor: `${RED}08` }}>
                     {cert}
                   </span>
                 ))}
               </div>
-            </div>
-
-            {/* Right — text */}
-            <div className="flex flex-col gap-5">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-                <span className="text-xs font-bold tracking-[0.3em] uppercase" style={{ color: RED }}>Safety First</span>
-              </div>
-              <h2 className="font-display text-4xl font-bold text-slate-900 leading-tight">
-                Zero-Harm Culture, Every Project
-              </h2>
-              <p className="text-slate-600 leading-relaxed">
-                At KDC, safety is not a compliance exercise — it is a deeply embedded cultural value. Our zero-harm philosophy is enforced through rigorous permit-to-work systems, daily toolbox talks, mandatory PPE, and continuous workforce training.
-              </p>
-              <ul className="space-y-3">
-                {[
-                  'Dedicated HSE officers on every site',
-                  'Pre-task risk assessments for all operations',
-                  'Emergency response plans and drills',
-                  'Real-time incident reporting and analysis',
-                  'Management of Change (MOC) procedures',
-                ].map((point) => (
-                  <li key={point} className="flex items-center gap-3 text-slate-700 text-sm">
-                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: RED }} />
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </Reveal>
           </div>
+
+          {/* Image + copy */}
+          <Reveal variants={fadeIn}>
+            <div className="relative">
+              <div className="rounded-2xl overflow-hidden h-72">
+                <img src="/images/qhse-hero-bg.png" alt="Safety culture" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/60 to-transparent" />
+              </div>
+              <div className="mt-6 flex flex-col gap-4">
+                {[
+                  'Mandatory pre-job risk assessments for all site activities',
+                  'Real-time incident reporting and 24-hour HSE officer coverage',
+                  'Stop-Work Authority granted to every team member',
+                  'Monthly safety audits by independent QHSE team',
+                ].map((point, i) => (
+                  <Reveal key={point} custom={i * 0.1}>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: RED }} />
+                      <span className="text-stone-600 text-sm leading-relaxed">{point}</span>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── 7. PROJECT SHOWCASE / GALLERY ───────────────────────────── */}
-      <section className="py-24 px-6" style={{ backgroundColor: '#f8f8f8' }}>
+      {/* ── 7. GALLERY ───────────────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 bg-stone-50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase" style={{ color: RED }}>Gallery</span>
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
+          <Reveal custom={0}>
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+              <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Our Work</span>
             </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-4">Project Showcase</h2>
-            <p className="text-slate-600 max-w-xl mx-auto">A selection of completed water well projects demonstrating KDC&apos;s operational range and technical capability.</p>
-          </div>
+          </Reveal>
+          <Reveal custom={1}>
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-stone-900 mb-12">Project Gallery</h2>
+          </Reveal>
 
-          {/* Masonry-style grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {gallery.map((img, i) => (
-              <div
-                key={i}
-                className={`group relative overflow-hidden rounded-2xl cursor-zoom-in ${img.size === 'large' ? 'md:col-span-2 row-span-1' : ''}`}
-                style={{ aspectRatio: img.size === 'large' ? '16/7' : '4/3' }}
-                onClick={() => setLightbox(img.src)}
-              >
-                <img
-                  src={img.src}
-                  alt={img.label}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
-                  <p className="text-white font-bold text-sm font-display">{img.label}</p>
-                </div>
-              </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {galleryImages.map((img, i) => (
+              <Reveal key={img.src} custom={i * 0.08} variants={scaleIn}>
+                <motion.div
+                  className="relative rounded-xl overflow-hidden cursor-pointer group"
+                  style={{ aspectRatio: i % 3 === 0 ? '4/3' : '1/1' }}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setLightbox(img.src)}
+                >
+                  <img src={img.src} alt={img.label} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                    <span className="text-white text-sm font-semibold">{img.label}</span>
+                  </div>
+                </motion.div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
-          onClick={() => setLightbox(null)}
-        >
-          <button
-            className="absolute top-5 right-5 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+      <AnimatePresence>
+        {lightbox && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={() => setLightbox(null)}
-            aria-label="Close"
           >
-            <X className="w-5 h-5" />
-          </button>
-          <img
-            src={lightbox}
-            alt="Project detail"
-            className="max-w-5xl w-full max-h-[85vh] object-contain rounded-xl"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
-
-      {/* ── 8. WHY KDC ──────────────────────────────────────────────── */}
-      <section className="py-24 px-6" style={{ backgroundColor: DARK }}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase text-red-400">Why Choose Us</span>
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-            </div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">Why KDC?</h2>
-            <p className="text-slate-400 max-w-xl mx-auto">Six reasons why governments, operators, and infrastructure companies trust KDC with their most critical water well projects.</p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyKdc.map(({ icon: Icon, title, desc }) => (
-              <div
-                key={title}
-                className="group relative bg-white/5 border border-white/10 rounded-2xl p-7 hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 overflow-hidden"
+            <motion.div
+              className="relative max-w-5xl w-full"
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setLightbox(null)}
+                className="absolute -top-10 right-0 text-white/70 hover:text-white text-sm flex items-center gap-1"
               >
-                {/* Hover glow */}
-                <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-red-600/0 group-hover:bg-red-600/10 transition-all duration-500 blur-xl" />
+                <X className="w-4 h-4" /> Close
+              </button>
+              <img src={lightbox} alt="Gallery" className="w-full rounded-xl object-cover max-h-[80vh]" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors duration-300"
-                  style={{ backgroundColor: 'rgba(192,24,42,0.15)' }}
-                >
-                  <Icon className="w-6 h-6" style={{ color: RED }} />
+      {/* ── 8. WHY KDC ───────────────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div>
+              <Reveal custom={0}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-8 h-px" style={{ backgroundColor: RED }} />
+                  <span className="text-xs tracking-[0.3em] uppercase font-semibold" style={{ color: RED }}>Why Choose Us</span>
                 </div>
-                <h3 className="font-display text-lg font-bold text-white mb-2">{title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
-              </div>
-            ))}
+              </Reveal>
+              <Reveal custom={1}>
+                <h2 className="font-display text-4xl md:text-5xl font-bold text-stone-900 leading-tight text-balance">
+                  The Standard for Water Well Excellence in Kuwait
+                </h2>
+              </Reveal>
+              <Reveal custom={2}>
+                <p className="mt-6 text-stone-500 leading-relaxed text-sm">
+                  Government agencies, national oil companies, and industrial developers choose KDC because we combine decades of on-the-ground experience with modern technology and an unwavering commitment to safety and quality delivery.
+                </p>
+              </Reveal>
+              <Reveal custom={3}>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 font-semibold text-white rounded-lg text-sm transition-opacity hover:opacity-90"
+                  style={{ backgroundColor: RED }}
+                >
+                  Start a Conversation <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Reveal>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {whyKDC.map((item, i) => (
+                <Reveal key={item.title} custom={i * 0.1} variants={scaleIn}>
+                  <motion.div
+                    className="p-6 rounded-2xl border border-stone-200 bg-stone-50 hover:border-red-200 hover:bg-red-50/40 transition-all duration-300 group"
+                    whileHover={{ y: -3 }}
+                  >
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
+                      style={{ backgroundColor: `${RED}14` }}>
+                      <item.icon className="w-5 h-5" style={{ color: RED }} />
+                    </div>
+                    <h3 className="font-display font-bold text-stone-900 text-sm mb-2">{item.title}</h3>
+                    <p className="text-stone-500 text-xs leading-relaxed">{item.desc}</p>
+                  </motion.div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── 9. CTA BANNER ───────────────────────────────────────────── */}
-      <section
-        className="py-20 px-6 text-white relative overflow-hidden"
-        style={{ backgroundColor: RED }}
-      >
-        {/* Subtle pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.07] pointer-events-none"
+      {/* ── 9. CTA ───────────────────────────────────────────────────── */}
+      <section className="py-28 px-6 md:px-12 relative overflow-hidden" style={{ backgroundColor: RED }}>
+        {/* Texture */}
+        <div className="absolute inset-0 opacity-10"
           style={{
             backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)',
             backgroundSize: '28px 28px',
           }}
         />
-        <div className="relative max-w-5xl mx-auto text-center">
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-4 text-balance">
-            Partner With Kuwait&apos;s Trusted Water Well Experts
-          </h2>
-          <p className="text-white/85 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
-            Whether you need a single production well or a multi-borehole water supply scheme, KDC&apos;s team is ready to deliver. Contact us today for a tailored proposal.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link
-              href="/contact"
-              className="px-9 py-4 bg-white rounded-xl font-bold text-sm hover:bg-slate-100 transition-colors shadow-lg"
-              style={{ color: RED }}
-            >
-              Contact Team
-            </Link>
-            <a
-              href="#"
-              className="px-9 py-4 border-2 border-white/60 rounded-xl font-bold text-sm hover:bg-white/10 transition-colors flex items-center gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Download Company Profile
-            </a>
+        {/* Large watermark */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 font-display text-[18rem] font-black text-white/5 leading-none select-none pointer-events-none">
+          KDC
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+          <div className="max-w-xl">
+            <Reveal custom={0}>
+              <h2 className="font-display text-4xl md:text-6xl font-bold text-white leading-tight text-balance">
+                Partner With Kuwait&apos;s Trusted Water Well Experts
+              </h2>
+            </Reveal>
+            <Reveal custom={1}>
+              <p className="mt-5 text-white/75 leading-relaxed">
+                Ready to discuss your project? Our engineering team is available for site consultations, technical proposals, and feasibility assessments across Kuwait, Oman, and Jordan.
+              </p>
+            </Reveal>
           </div>
 
-          {/* Quick contact */}
-          <div className="flex flex-wrap gap-8 justify-center mt-10 text-sm text-white/80">
-            <a href="tel:+96522262660" className="flex items-center gap-2 hover:text-white transition-colors">
-              <Phone className="w-4 h-4" />
-              +965 2226 2660
-            </a>
-            <a href="mailto:info@kdckwt.com" className="flex items-center gap-2 hover:text-white transition-colors">
-              <Mail className="w-4 h-4" />
-              info@kdckwt.com
-            </a>
-            <span className="flex items-center gap-2">
-              <MapPin className="w-4 h-4" />
-              Kuwait City, Kuwait
-            </span>
-          </div>
+          <Reveal custom={2}>
+            <div className="flex flex-col gap-4 flex-shrink-0">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white font-bold text-sm rounded-lg hover:bg-stone-100 transition-colors"
+                style={{ color: RED }}
+              >
+                <Phone className="w-4 h-4" /> Contact Our Team
+              </Link>
+              <a
+                href="#"
+                className="inline-flex items-center gap-2 px-8 py-4 border-2 border-white/50 text-white font-bold text-sm rounded-lg hover:bg-white/10 transition-colors"
+              >
+                <Download className="w-4 h-4" /> Download Company Profile
+              </a>
+              <a href="mailto:info@kdckwt.com"
+                className="flex items-center gap-2 text-white/70 hover:text-white text-sm transition-colors text-center justify-center">
+                <Mail className="w-4 h-4" /> info@kdckwt.com
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ── 10. RELATED SERVICES ────────────────────────────────────── */}
-      <section className="py-20 px-6 bg-white">
+      {/* ── 10. RELATED SERVICES ─────────────────────────────────────── */}
+      <section className="py-24 px-6 md:px-12" style={{ backgroundColor: DARK }}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-3 mb-4">
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-              <span className="text-xs font-bold tracking-[0.3em] uppercase" style={{ color: RED }}>Explore More</span>
-              <div className="w-8 h-0.5" style={{ backgroundColor: RED }} />
-            </div>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900">Related Services</h2>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {relatedServices.map(({ icon: Icon, title, href, desc }) => (
-              <Link
-                key={title}
-                href={href}
-                className="group flex flex-col gap-4 p-6 bg-slate-50 border border-slate-200 rounded-2xl hover:border-red-300 hover:shadow-lg hover:bg-white transition-all duration-300"
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300"
-                  style={{ backgroundColor: '#fef2f2' }}
-                >
-                  <Icon className="w-6 h-6" style={{ color: RED }} />
-                </div>
-                <div>
-                  <h3 className="font-display text-base font-bold text-slate-900 mb-1 group-hover:text-red-700 transition-colors">{title}</h3>
-                  <p className="text-slate-500 text-xs leading-relaxed">{desc}</p>
-                </div>
-                <div className="flex items-center gap-1 text-sm font-bold mt-auto" style={{ color: RED }}>
-                  View Service <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
+          <Reveal custom={0}>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-10">Related Services</h2>
+          </Reveal>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {relatedServices.map((svc, i) => (
+              <Reveal key={svc.title} custom={i * 0.1} variants={scaleIn}>
+                <Link href={svc.href}>
+                  <motion.div
+                    className="group p-6 rounded-2xl border border-white/8 hover:border-red-700/50 bg-white/4 hover:bg-white/8 transition-all duration-300 flex items-center justify-between"
+                    whileHover={{ y: -3 }}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${RED}20` }}>
+                        <svc.icon className="w-5 h-5" style={{ color: RED }} />
+                      </div>
+                      <span className="font-semibold text-white text-sm">{svc.title}</span>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-white/30 group-hover:text-white/70 group-hover:translate-x-1 transition-all" />
+                  </motion.div>
+                </Link>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Sticky floating contact button */}
-      <a
-        href="/contact"
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 px-5 py-3 rounded-full text-white font-bold text-sm shadow-2xl hover:shadow-red-500/30 transition-all"
-        style={{ backgroundColor: RED }}
+      {/* ── Sticky floating contact ───────────────────────────────────── */}
+      <motion.div
+        className="fixed bottom-8 right-6 z-40"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 2, duration: 0.4, type: 'spring' }}
       >
-        <Phone className="w-4 h-4" />
-        <span className="hidden sm:inline">Contact Us</span>
-      </a>
+        <Link
+          href="/contact"
+          className="flex items-center gap-2 px-5 py-3 rounded-full text-white text-sm font-bold shadow-2xl hover:opacity-90 transition-opacity"
+          style={{ backgroundColor: RED }}
+        >
+          <Phone className="w-4 h-4" />
+          <span className="hidden sm:inline">Contact Us</span>
+        </Link>
+      </motion.div>
 
       <Footer />
     </>
