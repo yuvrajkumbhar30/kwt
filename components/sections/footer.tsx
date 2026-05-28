@@ -34,7 +34,7 @@ const quickLinks = [
 ];
 
 const serviceLinks = [
-  { label: "Drilling & Workover", href: "#", icon: Drill },
+  { label: "Drilling & Workover", href: "/services/drilling-workover", icon: Drill },
   { label: "Directional Drilling", href: "#", icon: Compass },
   { label: "Tubular Running", href: "#", icon: Wrench },
   { label: "BHA Rental", href: "#", icon: Package },

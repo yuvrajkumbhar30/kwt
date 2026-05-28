@@ -27,7 +27,7 @@ const navItems: NavItem[] = [
     label: 'Services',
     href: '#',
     children: [
-      { label: 'Drilling & Workover', href: '#' },
+      { label: 'Drilling & Workover', href: '/services/drilling-workover' },
       { label: 'Directional Drilling', href: '#' },
       { label: 'Water Well', href: '#' },
       { label: 'Tubular Running Services', href: '#' },
