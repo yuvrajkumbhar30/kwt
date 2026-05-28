@@ -28,7 +28,7 @@ const LOGO_URL =
 const quickLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "About Us", href: "#", icon: Info },
-  { label: "Chairman's Message", href: "#", icon: MessageSquare },
+  { label: "Chairman's Message", href: "/chairmanmessage", icon: MessageSquare },
   { label: "Management Team", href: "#", icon: Users },
 ];
 
