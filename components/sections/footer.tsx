@@ -45,7 +45,7 @@ const serviceLinks = [
 const companyLinks = [
   { label: "QHSE", href: "#", icon: ShieldCheck },
   { label: "Careers", href: "#", icon: Briefcase },
-  { label: "Contact Us", href: "#", icon: PhoneCall },
+  { label: "Contact Us", href: "/contact", icon: PhoneCall },
   { label: "Privacy Policy", href: "#", icon: Lock },
 ];
 

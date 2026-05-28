@@ -42,7 +42,7 @@ const navItems: NavItem[] = [
     href: '#',
     children: [{ label: 'Join Us', href: '#' }],
   },
-  { label: 'Contact Us', href: '#' },
+  { label: 'Contact Us', href: '/contact' },
 ];
 
 function DropdownMenu({ items }: { items: NavChild[] }) {
