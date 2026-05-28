@@ -35,13 +35,13 @@ function VideoSection() {
   return (
     <>
       {/* ── FEATURED VIDEO ─────────────────────────────────────────────── */}
-      <section className="py-20 px-4 bg-slate-900 relative overflow-hidden">
+      <section className="py-20 px-4 bg-slate-100 relative overflow-hidden">
         {/* Subtle background texture */}
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle, #60a5fa 1px, transparent 1px)",
+              "radial-gradient(circle, #94a3b8 1px, transparent 1px)",
             backgroundSize: "32px 32px",
           }}
         />
@@ -52,7 +52,7 @@ function VideoSection() {
             {/* Left — Video card */}
             <div className="relative group cursor-pointer" onClick={openModal}>
               {/* Glassmorphism card */}
-              <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl aspect-video bg-slate-800">
+              <div className="relative rounded-2xl overflow-hidden border border-slate-300 shadow-2xl aspect-video bg-slate-200">
                 {/* Thumbnail — first frame via the video poster */}
                 <video
                   src={VIDEO_URL}
@@ -92,16 +92,16 @@ function VideoSection() {
 
             {/* Right — Copy */}
             <div className="flex flex-col gap-6">
-              <p className="text-blue-400 text-xs font-semibold tracking-[0.3em] uppercase">
+              <p className="text-blue-600 text-xs font-semibold tracking-[0.3em] uppercase">
                 From Our Chairman
               </p>
-              <h2 className="font-display text-4xl md:text-5xl font-bold text-white leading-tight text-balance">
+              <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 leading-tight text-balance">
                 A Message From<br />Our Chairman
               </h2>
-              <p className="text-slate-400 leading-relaxed text-[15px]">
+              <p className="text-slate-600 leading-relaxed text-[15px]">
                 In this exclusive address, our Chairman shares his vision for Kuwait Drilling CO. — outlining the values, strategy, and long-term commitment that have made KDC a trusted leader in the region&apos;s oilfield services industry.
               </p>
-              <ul className="space-y-3 text-slate-300 text-sm">
+              <ul className="space-y-3 text-slate-700 text-sm">
                 {[
                   "Company vision and long-term strategy",
                   "Commitment to safety and quality",
@@ -276,7 +276,7 @@ export default function ChairmanMessagePage() {
             className="object-cover object-center"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-900/75 to-slate-900/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900/55 via-slate-800/35 to-slate-800/10" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-24 w-full">
             {/* Breadcrumb */}
