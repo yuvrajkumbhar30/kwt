@@ -38,7 +38,7 @@ const serviceLinks = [
   { label: "Directional Drilling", href: "#", icon: Compass },
   { label: "Tubular Running", href: "/services/tubular-running", icon: Wrench },
   { label: "Manpower Services", href: "/services/manpower", icon: Users },
-  { label: "BHA Rental", href: "#", icon: Package },
+  { label: "BHA Rental", href: "/services/bha-rental", icon: Package },
   { label: "Fishing Services", href: "#", icon: Anchor },
   { label: "Water Well Drilling", href: "/services/water-well", icon: Droplets },
 ];

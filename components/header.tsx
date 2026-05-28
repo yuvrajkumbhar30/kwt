@@ -32,7 +32,7 @@ const navItems: NavItem[] = [
       { label: 'Water Well', href: '/services/water-well' },
       { label: 'Tubular Running Services', href: '/services/tubular-running' },
       { label: 'Manpower', href: '/services/manpower' },
-      { label: 'BHA Rental', href: '#' },
+      { label: 'BHA Rental', href: '/services/bha-rental' },
       { label: 'Fishing Services', href: '#' },
     ],
   },
