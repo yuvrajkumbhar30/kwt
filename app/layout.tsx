@@ -1,38 +1,24 @@
 import type { Metadata } from 'next'
-import { Poppins, Montserrat, Agdasima, Oswald } from 'next/font/google'
+import { Poppins, Agdasima } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-poppins",
-});
-const _montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["600", "700", "800", "900"],
-  variable: "--font-montserrat",
-});
-const _agdasima = Agdasima({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-agdasima",
-});
-const _oswald = Oswald({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-oswald",
-});
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
+})
+const agdasima = Agdasima({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-agdasima',
+})
 
 export const metadata: Metadata = {
-  title: 'KDC - Advanced Drilling & Oilfield Services in Kuwait',
-  description: 'Leading oilfield services provider in Kuwait offering drilling, directional drilling, tubular running, BHA rental, and fishing services. 20+ years of experience with 100% safety compliance.',
-  keywords: 'drilling, oilfield services, Kuwait, directional drilling, workover, QHSE, oil and gas',
-  openGraph: {
-    title: 'KDC - Oilfield Services Kuwait',
-    description: 'Professional drilling and oilfield solutions across the Middle East',
-    url: 'https://www.kdckwt.com',
-  },
+  title: 'KDC Kuwait — Advanced Drilling & Oilfield Services',
+  description:
+    'Delivering safe, efficient, and high-performance solutions across drilling, directional services, and manpower in Kuwait and the wider Middle East.',
+  keywords: 'drilling, oilfield services, Kuwait, directional drilling, tubular running, BHA rental, fishing services, workover',
   generator: 'v0.app',
 }
 
@@ -42,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`bg-white ${_poppins.variable} ${_montserrat.variable} ${_agdasima.variable} ${_oswald.variable}`}>
+    <html lang="en" className={`${poppins.variable} ${agdasima.variable} bg-background`}>
       <body className="font-sans antialiased">
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
