@@ -29,7 +29,7 @@ const navItems: NavItem[] = [
     children: [
       { label: 'Drilling & Workover', href: '/services/drilling-workover' },
       { label: 'Directional Drilling', href: '#' },
-      { label: 'Water Well', href: '#' },
+      { label: 'Water Well', href: '/services/water-well' },
       { label: 'Tubular Running Services', href: '#' },
       { label: 'Manpower', href: '#' },
       { label: 'BHA Rental', href: '#' },
