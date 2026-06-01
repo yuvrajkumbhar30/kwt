@@ -5,9 +5,6 @@ import {
   Facebook,
   Linkedin,
   Twitter,
-  Home,
-  Info,
-  MessageSquare,
   Users,
   Drill,
   Wrench,
@@ -26,17 +23,6 @@ import {
 
 const LOGO_URL =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-0NU6YcKMYEqn4H9EdvYbbZ0YRN3Mhn.png";
-
-const quickLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "#" },
-  { label: "Chairman's Message", href: "/chairmanmessage" },
-  { label: "Board of Directors", href: "/board-of-directors" },
-  { label: "Management Team", href: "/management-team" },
-  { label: "QHSE", href: "/qhse" },
-  { label: "Careers", href: "/careers" },
-  { label: "Contact Us", href: "/contact" },
-];
 
 const kdcServices = [
   { label: "Drilling & Workover", href: "/services/drilling-workover", icon: Drill },
@@ -89,7 +75,7 @@ export function Footer() {
       <div className="h-1 w-full bg-blue-600" />
 
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
 
           {/* Column 1 — Logo, about, social icons, contact */}
           <div className="flex flex-col gap-5 lg:col-span-1">
@@ -155,25 +141,19 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Column 2 — Quick Links */}
-          <div>
-            <ColHeading title="Quick Links" />
-            <FooterLinkList links={quickLinks} />
-          </div>
-
-          {/* Column 3 — KDC Services */}
+          {/* Column 2 — KDC Services */}
           <div>
             <ColHeading title="KDC Services" />
             <FooterLinkList links={kdcServices} />
           </div>
 
-          {/* Column 4 — Integrated Drilling Services */}
+          {/* Column 3 — Integrated Drilling Services */}
           <div>
             <ColHeading title="Integrated Drilling" />
             <FooterLinkList links={integratedServices} />
           </div>
 
-          {/* Column 5 — Company */}
+          {/* Column 4 — Company */}
           <div>
             <ColHeading title="Company" />
             <ul className="space-y-3 text-sm">
