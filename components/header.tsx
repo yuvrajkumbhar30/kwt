@@ -24,16 +24,25 @@ const navItems: NavItem[] = [
     ],
   },
   {
-    label: 'Services',
+    label: 'KDC Services',
     href: '#',
     children: [
       { label: 'Drilling & Workover', href: '/services/drilling-workover' },
-      { label: 'Directional Drilling', href: '#' },
       { label: 'Water Well', href: '/services/water-well' },
       { label: 'Tubular Running Services', href: '/services/tubular-running' },
       { label: 'Manpower', href: '/services/manpower' },
       { label: 'BHA Rental', href: '/services/bha-rental' },
-      { label: 'Fishing Services', href: '#' },
+      { label: 'Trainings', href: '#' },
+    ],
+  },
+  {
+    label: 'Integrated Drilling Services',
+    href: '#',
+    children: [
+      { label: 'Drilling & Measurements', href: '#' },
+      { label: 'Fishing & Remedial Services', href: '#' },
+      { label: 'Cementing Services', href: '#' },
+      { label: 'Drilling Fluids Services', href: '#' },
     ],
   },
   { label: 'QHSE', href: '/qhse' },
@@ -45,15 +54,24 @@ const navItems: NavItem[] = [
   { label: 'Contact Us', href: '/contact' },
 ];
 
-function DropdownMenu({ items }: { items: NavChild[] }) {
+function DropdownMenu({ items, label }: { items: NavChild[]; label: string }) {
+  const isServiceGroup = label === 'KDC Services' || label === 'Integrated Drilling Services';
   return (
-    <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-slate-100 rounded-lg shadow-xl py-1 z-50">
+    <div className={`absolute top-full left-0 mt-1 bg-white border border-slate-100 rounded-xl shadow-2xl py-2 z-50 ${isServiceGroup ? 'w-72' : 'w-56'}`}>
+      {isServiceGroup && (
+        <div className="px-4 pb-2 mb-1 border-b border-slate-100">
+          <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-blue-600">
+            {label}
+          </span>
+        </div>
+      )}
       {items.map((child) => (
         <Link
           key={child.label}
           href={child.href}
-          className="block px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors font-medium"
+          className="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 transition-colors font-medium group"
         >
+          <span className="w-1 h-1 rounded-full bg-blue-300 group-hover:bg-blue-600 flex-shrink-0 transition-colors" />
           {child.label}
         </Link>
       ))}
@@ -119,7 +137,7 @@ export function Header() {
                 )}
               </Link>
               {item.children && openDropdown === item.label && (
-                <DropdownMenu items={item.children} />
+                <DropdownMenu items={item.children} label={item.label} />
               )}
             </div>
           ))}
@@ -155,14 +173,20 @@ export function Header() {
                       />
                     </button>
                     {mobileExpanded === item.label && (
-                      <div className="ml-4 mt-1 space-y-1 border-l-2 border-blue-100 pl-3">
+                      <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-blue-100 pl-3">
+                        {(item.label === 'KDC Services' || item.label === 'Integrated Drilling Services') && (
+                          <p className="text-[10px] font-bold tracking-[0.18em] uppercase text-blue-500 px-2 pt-1 pb-0.5">
+                            {item.label}
+                          </p>
+                        )}
                         {item.children.map((child) => (
                           <Link
                             key={child.label}
                             href={child.href}
-                            className="block py-2 px-2 text-sm text-slate-600 hover:text-blue-700 transition-colors"
+                            className="flex items-center gap-2 py-2 px-2 text-sm text-slate-600 hover:text-blue-700 transition-colors"
                             onClick={() => setIsOpen(false)}
                           >
+                            <span className="w-1 h-1 rounded-full bg-blue-300 flex-shrink-0" />
                             {child.label}
                           </Link>
                         ))}
