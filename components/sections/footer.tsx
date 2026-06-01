@@ -14,6 +14,7 @@ import {
   Briefcase,
   PhoneCall,
   Lock,
+  Globe,
   ChevronRight,
   FlaskConical,
   Fish,
