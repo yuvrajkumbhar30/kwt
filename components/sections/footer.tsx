@@ -158,6 +158,7 @@ export function Footer() {
             <ColHeading title="Company" />
             <ul className="space-y-3 text-sm">
               {[
+                { label: "KDC Oman", href: "/oman", icon: Globe },
                 { label: "QHSE", href: "/qhse", icon: ShieldCheck },
                 { label: "Careers", href: "/careers", icon: Briefcase },
                 { label: "Contact Us", href: "/contact", icon: PhoneCall },
