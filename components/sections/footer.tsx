@@ -10,45 +10,77 @@ import {
   MessageSquare,
   Users,
   Drill,
-  Compass,
   Wrench,
   Package,
-  Anchor,
   Droplets,
   ShieldCheck,
   Briefcase,
   PhoneCall,
   Lock,
   ChevronRight,
+  FlaskConical,
+  Fish,
+  Layers,
+  Gauge,
 } from "lucide-react";
 
 const LOGO_URL =
   "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Logo-0NU6YcKMYEqn4H9EdvYbbZ0YRN3Mhn.png";
 
 const quickLinks = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "About Us", href: "#", icon: Info },
-  { label: "Chairman's Message", href: "/chairmanmessage", icon: MessageSquare },
-  { label: "Board of Directors", href: "/board-of-directors", icon: Users },
-  { label: "Management Team", href: "/management-team", icon: Users },
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "#" },
+  { label: "Chairman's Message", href: "/chairmanmessage" },
+  { label: "Board of Directors", href: "/board-of-directors" },
+  { label: "Management Team", href: "/management-team" },
+  { label: "QHSE", href: "/qhse" },
+  { label: "Careers", href: "/careers" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
-const serviceLinks = [
+const kdcServices = [
   { label: "Drilling & Workover", href: "/services/drilling-workover", icon: Drill },
-  { label: "Directional Drilling", href: "#", icon: Compass },
-  { label: "Tubular Running", href: "/services/tubular-running", icon: Wrench },
-  { label: "Manpower Services", href: "/services/manpower", icon: Users },
+  { label: "Water Well", href: "/services/water-well", icon: Droplets },
+  { label: "Tubular Running Services", href: "/services/tubular-running", icon: Wrench },
+  { label: "Manpower", href: "/services/manpower", icon: Users },
   { label: "BHA Rental", href: "/services/bha-rental", icon: Package },
-  { label: "Fishing Services", href: "#", icon: Anchor },
-  { label: "Water Well Drilling", href: "/services/water-well", icon: Droplets },
+  { label: "Trainings", href: "#", icon: Briefcase },
 ];
 
-const companyLinks = [
-  { label: "QHSE", href: "/qhse", icon: ShieldCheck },
-  { label: "Careers", href: "/careers", icon: Briefcase },
-  { label: "Contact Us", href: "/contact", icon: PhoneCall },
-  { label: "Privacy Policy", href: "#", icon: Lock },
+const integratedServices = [
+  { label: "Drilling & Measurements", href: "#", icon: Gauge },
+  { label: "Fishing & Remedial Services", href: "#", icon: Fish },
+  { label: "Cementing Services", href: "#", icon: Layers },
+  { label: "Drilling Fluids Services", href: "#", icon: FlaskConical },
 ];
+
+function FooterLinkList({ links }: { links: { label: string; href: string; icon?: React.ElementType }[] }) {
+  return (
+    <ul className="space-y-3 text-sm">
+      {links.map(({ label, href, icon: Icon }) => (
+        <li key={label}>
+          <a
+            href={href}
+            className="flex items-center gap-2.5 text-slate-400 hover:text-blue-400 transition-colors group"
+          >
+            {Icon && <Icon className="w-3.5 h-3.5 flex-shrink-0 text-blue-500 group-hover:text-blue-400" />}
+            <span>{label}</span>
+            <ChevronRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ColHeading({ title }: { title: string }) {
+  return (
+    <h4 className="font-agdasima text-white text-xl tracking-widest uppercase mb-5 flex items-center gap-2">
+      <span className="inline-block w-6 h-0.5 bg-blue-500" />
+      {title}
+    </h4>
+  );
+}
 
 export function Footer() {
   return (
@@ -56,11 +88,11 @@ export function Footer() {
       {/* Top bar accent */}
       <div className="h-1 w-full bg-blue-600" />
 
-      <div className="max-w-6xl mx-auto px-6 pt-14 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+      <div className="max-w-7xl mx-auto px-6 pt-14 pb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
 
-          {/* Column 1 — Logo & about */}
-          <div className="flex flex-col gap-5">
+          {/* Column 1 — Logo, about, social icons, contact */}
+          <div className="flex flex-col gap-5 lg:col-span-1">
             <a href="/" aria-label="KDC Home">
               <img
                 src={LOGO_URL}
@@ -73,7 +105,9 @@ export function Footer() {
               oilfield services across the Middle East with 20+ years of
               operational excellence.
             </p>
-            <div className="flex gap-3 mt-1">
+
+            {/* Social icons */}
+            <div className="flex gap-3">
               <a
                 href="#"
                 aria-label="Facebook"
@@ -96,60 +130,59 @@ export function Footer() {
                 <Twitter className="w-4 h-4" />
               </a>
             </div>
+
+            {/* Contact — below social icons */}
+            <div className="mt-2">
+              <ColHeading title="Contact" />
+              <ul className="space-y-3 text-sm">
+                <li className="flex items-start gap-2.5 text-slate-400">
+                  <Phone className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-blue-500" />
+                  <a href="tel:+965XXXXXXX" className="hover:text-blue-400 transition-colors">
+                    +965 XXXX XXXX
+                  </a>
+                </li>
+                <li className="flex items-start gap-2.5 text-slate-400">
+                  <Mail className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-blue-500" />
+                  <a href="mailto:info@kdckwt.com" className="hover:text-blue-400 transition-colors break-all">
+                    info@kdckwt.com
+                  </a>
+                </li>
+                <li className="flex items-start gap-2.5 text-slate-400">
+                  <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-blue-500" />
+                  <span>Kuwait City, Kuwait</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Column 2 — Quick Links */}
           <div>
-            <h4 className="font-agdasima text-white text-xl tracking-widest uppercase mb-5 flex items-center gap-2">
-              <span className="inline-block w-6 h-0.5 bg-blue-500" />
-              Quick Links
-            </h4>
-            <ul className="space-y-3 text-sm">
-              {quickLinks.map(({ label, href, icon: Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="flex items-center gap-2.5 text-slate-400 hover:text-blue-400 transition-colors group"
-                  >
-                    <Icon className="w-3.5 h-3.5 flex-shrink-0 text-blue-500 group-hover:text-blue-400" />
-                    <span>{label}</span>
-                    <ChevronRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <ColHeading title="Quick Links" />
+            <FooterLinkList links={quickLinks} />
           </div>
 
-          {/* Column 3 — Services */}
+          {/* Column 3 — KDC Services */}
           <div>
-            <h4 className="font-agdasima text-white text-xl tracking-widest uppercase mb-5 flex items-center gap-2">
-              <span className="inline-block w-6 h-0.5 bg-blue-500" />
-              Services
-            </h4>
-            <ul className="space-y-3 text-sm">
-              {serviceLinks.map(({ label, href, icon: Icon }) => (
-                <li key={label}>
-                  <a
-                    href={href}
-                    className="flex items-center gap-2.5 text-slate-400 hover:text-blue-400 transition-colors group"
-                  >
-                    <Icon className="w-3.5 h-3.5 flex-shrink-0 text-blue-500 group-hover:text-blue-400" />
-                    <span>{label}</span>
-                    <ChevronRight className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <ColHeading title="KDC Services" />
+            <FooterLinkList links={kdcServices} />
           </div>
 
-          {/* Column 4 — Company & Contact */}
+          {/* Column 4 — Integrated Drilling Services */}
           <div>
-            <h4 className="font-agdasima text-white text-xl tracking-widest uppercase mb-5 flex items-center gap-2">
-              <span className="inline-block w-6 h-0.5 bg-blue-500" />
-              Company
-            </h4>
-            <ul className="space-y-3 text-sm mb-7">
-              {companyLinks.map(({ label, href, icon: Icon }) => (
+            <ColHeading title="Integrated Drilling" />
+            <FooterLinkList links={integratedServices} />
+          </div>
+
+          {/* Column 5 — Company */}
+          <div>
+            <ColHeading title="Company" />
+            <ul className="space-y-3 text-sm">
+              {[
+                { label: "QHSE", href: "/qhse", icon: ShieldCheck },
+                { label: "Careers", href: "/careers", icon: Briefcase },
+                { label: "Contact Us", href: "/contact", icon: PhoneCall },
+                { label: "Privacy Policy", href: "#", icon: Lock },
+              ].map(({ label, href, icon: Icon }) => (
                 <li key={label}>
                   <a
                     href={href}
@@ -162,30 +195,8 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-
-            <h4 className="font-agdasima text-white text-xl tracking-widest uppercase mb-4 flex items-center gap-2">
-              <span className="inline-block w-6 h-0.5 bg-blue-500" />
-              Contact
-            </h4>
-            <ul className="space-y-3 text-sm">
-              <li className="flex items-start gap-2.5 text-slate-400">
-                <Phone className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-blue-500" />
-                <a href="tel:+965XXXXXXX" className="hover:text-blue-400 transition-colors">
-                  +965 XXXX XXXX
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5 text-slate-400">
-                <Mail className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-blue-500" />
-                <a href="mailto:info@kdckwt.com" className="hover:text-blue-400 transition-colors break-all">
-                  info@kdckwt.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5 text-slate-400">
-                <MapPin className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-blue-500" />
-                <span>Kuwait City, Kuwait</span>
-              </li>
-            </ul>
           </div>
+
         </div>
 
         {/* Bottom bar */}
