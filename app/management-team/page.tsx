@@ -231,7 +231,7 @@ function ExecutiveCard({ exec, onOpen }: { exec: Executive; onOpen: (e: Executiv
           className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
         {/* Gold top bar */}
-        <div className="absolute top-0 inset-x-0 h-1 bg-amber-400" />
+        <div className="absolute top-0 inset-x-0 h-1 bg-blue-600" />
         {/* Department badge */}
         <div className="absolute top-4 right-4">
           <span className="px-2.5 py-1 bg-blue-700/90 text-white text-[10px] font-bold tracking-widest uppercase rounded-full backdrop-blur-sm">
@@ -318,12 +318,12 @@ function ProfileModal({ exec, onClose }: { exec: Executive; onClose: () => void 
               <img src={exec.image} alt={exec.name} className="w-full h-full object-cover object-top" />
             </div>
             <div>
-              <p className="text-amber-400 text-[10px] font-bold tracking-[0.3em] uppercase mb-1">{exec.department}</p>
+              <p className="text-blue-600 text-[10px] font-bold tracking-[0.3em] uppercase mb-1">{exec.department}</p>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-white">{exec.name}</h2>
               <p className="text-blue-200 text-sm mt-0.5">{exec.title}</p>
               <div className="flex items-center gap-1.5 mt-2">
-                <Briefcase className="w-3.5 h-3.5 text-amber-400" />
-                <span className="text-amber-400 text-xs font-semibold">{exec.years}+ Years of Experience</span>
+                <Briefcase className="w-3.5 h-3.5 text-blue-600" />
+                <span className="text-blue-600 text-xs font-semibold">{exec.years}+ Years of Experience</span>
               </div>
             </div>
           </div>
@@ -332,7 +332,7 @@ function ProfileModal({ exec, onClose }: { exec: Executive; onClose: () => void 
         {/* Body */}
         <div className="p-8 flex flex-col gap-8">
           {/* Quote */}
-          <blockquote className="border-l-4 border-amber-400 pl-5 py-1">
+          <blockquote className="border-l-4 border-blue-600 pl-5 py-1">
             <p className="text-slate-600 italic text-[15px] leading-relaxed">&ldquo;{exec.quote}&rdquo;</p>
           </blockquote>
 
@@ -351,7 +351,7 @@ function ProfileModal({ exec, onClose }: { exec: Executive; onClose: () => void 
               <ul className="space-y-2">
                 {exec.expertise.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-[13px] text-slate-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -417,10 +417,10 @@ export default function ManagementTeamPage() {
               <ChevronRight className="w-3 h-3" />
               <span className="text-white/40">About Us</span>
               <ChevronRight className="w-3 h-3" />
-              <span className="text-amber-400 font-semibold">Management Team</span>
+              <span className="text-blue-600 font-semibold">Management Team</span>
             </nav>
 
-            <p className="text-amber-400 text-xs font-bold tracking-[0.3em] uppercase mb-3">Leadership & Excellence</p>
+            <p className="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-3">Leadership & Excellence</p>
             <h1 className="font-display text-5xl md:text-6xl font-bold text-white mb-4 leading-tight text-balance">
               Management Team
             </h1>
@@ -513,7 +513,7 @@ export default function ManagementTeamPage() {
                     <h3 className="font-display text-lg font-bold text-slate-900 mb-1.5">{label}</h3>
                     <p className="text-slate-500 text-[13px] leading-relaxed">{desc}</p>
                   </div>
-                  <div className="h-0.5 w-8 bg-amber-400 rounded-full" />
+                  <div className="h-0.5 w-8 bg-blue-600 rounded-full" />
                 </div>
               ))}
             </div>
@@ -524,7 +524,7 @@ export default function ManagementTeamPage() {
         <section className="py-20 px-4 bg-slate-900">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-14">
-              <p className="text-amber-400 text-xs font-bold tracking-[0.3em] uppercase mb-3">Structure</p>
+              <p className="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-3">Structure</p>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">Organisational Hierarchy</h2>
               <p className="text-slate-400 max-w-xl mx-auto text-[15px] leading-relaxed">
                 A clear, enterprise-grade leadership structure ensuring accountability at every level.
@@ -535,7 +535,7 @@ export default function ManagementTeamPage() {
               {orgLevels.map((level, i) => (
                 <div key={level.level} className="w-full flex flex-col items-center">
                   {/* Connector line */}
-                  {i > 0 && <div className="w-0.5 h-6 bg-amber-400/40" />}
+                  {i > 0 && <div className="w-0.5 h-6 bg-blue-600/40" />}
                   <div className="w-full max-w-2xl">
                     <div className={`${level.color} rounded-2xl p-5 shadow-lg`}>
                       <p className="text-white/60 text-[10px] font-bold tracking-[0.25em] uppercase mb-2">Level {i + 1}</p>
@@ -604,11 +604,11 @@ export default function ManagementTeamPage() {
               <div className="absolute inset-0 opacity-10"
                 style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
               {/* Gold accent */}
-              <div className="absolute top-0 inset-x-0 h-1 bg-amber-400 rounded-t-3xl" />
+              <div className="absolute top-0 inset-x-0 h-1 bg-blue-600 rounded-t-3xl" />
 
               <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
                 <div>
-                  <p className="text-amber-400 text-xs font-bold tracking-[0.3em] uppercase mb-3">Join Our Team</p>
+                  <p className="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-3">Join Our Team</p>
                   <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 text-balance leading-tight">
                     Work With Our Leadership Team
                   </h2>
@@ -638,7 +638,7 @@ export default function ManagementTeamPage() {
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </a>
                   <div className="flex items-center gap-3 pt-2 border-t border-white/20">
-                    <Phone className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                    <Phone className="w-4 h-4 text-blue-600 flex-shrink-0" />
                     <a href="tel:+96522225800" className="text-white/80 hover:text-white text-sm transition-colors">
                       +965 2222 5800
                     </a>

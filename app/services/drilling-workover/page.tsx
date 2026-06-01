@@ -178,20 +178,20 @@ export default function DrillingWorkoverPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-transparent to-transparent" />
 
           {/* Animated geometric accent */}
-          <div className="absolute top-1/4 right-12 w-64 h-64 border border-amber-400/10 rotate-12 hidden xl:block" />
+          <div className="absolute top-1/4 right-12 w-64 h-64 border border-blue-600/10 rotate-12 hidden xl:block" />
           <div className="absolute top-1/3 right-20 w-40 h-40 border border-blue-400/10 -rotate-6 hidden xl:block" />
 
           <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pb-20 pt-32 w-full">
             <div className="max-w-3xl">
               {/* Eyebrow */}
               <div className="flex items-center gap-3 mb-6">
-                <div className="h-px w-12 bg-amber-400" />
-                <span className="text-amber-400 text-xs font-bold tracking-[0.3em] uppercase">KDC Services</span>
+                <div className="h-px w-12 bg-blue-600" />
+                <span className="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase">KDC Services</span>
               </div>
 
               <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-none mb-6 text-balance">
                 Drilling &<br />
-                <span className="text-amber-400">Workover</span><br />
+                <span className="text-blue-600">Workover</span><br />
                 Services
               </h1>
               <p className="text-slate-300 text-lg md:text-xl leading-relaxed mb-10 max-w-2xl">
@@ -201,7 +201,7 @@ export default function DrillingWorkoverPage() {
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-lg transition-colors shadow-lg font-display tracking-wide text-sm"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors shadow-lg font-display tracking-wide text-sm"
                 >
                   <Phone className="w-4 h-4" />
                   Contact Our Team
@@ -234,7 +234,7 @@ export default function DrillingWorkoverPage() {
             <ChevronRight className="w-3.5 h-3.5" />
             <Link href="/#services" className="hover:text-blue-700 transition-colors font-medium">Services</Link>
             <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-slate-900 font-semibold">Drilling & Workover</span>
+            <span className="text-slate-800 font-semibold">Drilling & Workover</span>
           </div>
         </nav>
 
@@ -297,13 +297,13 @@ export default function DrillingWorkoverPage() {
                   <p className="text-slate-500 text-xs">KOC & KPC approved</p>
                 </div>
               </div>
-              <div className="absolute top-1/2 -right-6 transform -translate-y-1/2 bg-amber-400 rounded-xl shadow-xl px-5 py-4 flex items-center gap-3 hidden xl:flex">
-                <div className="w-10 h-10 bg-amber-300 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Settings className="w-5 h-5 text-amber-800" />
+              <div className="absolute top-1/2 -right-6 transform -translate-y-1/2 bg-blue-700 rounded-xl shadow-xl px-5 py-4 flex items-center gap-3 hidden xl:flex">
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Settings className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <p className="font-display font-bold text-slate-900 text-sm">Advanced Equipment</p>
-                  <p className="text-slate-800 text-xs">7,500 psi systems</p>
+                  <p className="font-display font-bold text-white text-sm">Advanced Equipment</p>
+                  <p className="text-blue-100 text-xs">7,500 psi systems</p>
                 </div>
               </div>
             </div>
@@ -315,9 +315,9 @@ export default function DrillingWorkoverPage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="h-px w-10 bg-amber-400" />
-                <span className="text-amber-400 text-xs font-bold tracking-[0.25em] uppercase">What We Deliver</span>
-                <div className="h-px w-10 bg-amber-400" />
+                <div className="h-px w-10 bg-blue-600" />
+                <span className="text-blue-600 text-xs font-bold tracking-[0.25em] uppercase">What We Deliver</span>
+                <div className="h-px w-10 bg-blue-600" />
               </div>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 text-balance">Core Service Capabilities</h2>
               <p className="text-slate-400 max-w-2xl mx-auto text-[15px] leading-relaxed">
@@ -372,7 +372,7 @@ export default function DrillingWorkoverPage() {
                 {/* Connecting line */}
                 <div className="absolute top-16 left-0 right-0 h-0.5 bg-slate-200">
                   <div
-                    className="h-full bg-gradient-to-r from-blue-600 to-amber-400 transition-all duration-2000"
+                    className="h-full bg-gradient-to-r from-blue-600 to-blue-600 transition-all duration-2000"
                     style={{ width: process.inView ? '100%' : '0%', transition: 'width 2s ease-in-out' }}
                   />
                 </div>
@@ -506,7 +506,7 @@ export default function DrillingWorkoverPage() {
                   <p className="font-display text-2xl font-bold text-white">KDC Rig Fleet</p>
                   <p className="text-slate-300 text-sm">VFD & SCR Rigs — 1,500 to 3,000 HP</p>
                 </div>
-                <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-lg text-sm transition-colors">
+                <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg text-sm transition-colors">
                   Request a Rig <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -542,8 +542,8 @@ export default function DrillingWorkoverPage() {
               {/* Left sticky heading */}
               <div className={`transition-all duration-700 ${whySection.inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-px w-10 bg-amber-400" />
-                  <span className="text-amber-600 text-xs font-bold tracking-[0.25em] uppercase">Our Advantage</span>
+                  <div className="h-px w-10 bg-blue-600" />
+                  <span className="text-blue-600 text-xs font-bold tracking-[0.25em] uppercase">Our Advantage</span>
                 </div>
                 <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 mb-6 text-balance leading-tight">
                   Why Choose<br />
@@ -582,16 +582,16 @@ export default function DrillingWorkoverPage() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-14">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="h-px w-10 bg-amber-400" />
-                <span className="text-amber-400 text-xs font-bold tracking-[0.25em] uppercase">Case Studies</span>
-                <div className="h-px w-10 bg-amber-400" />
+                <div className="h-px w-10 bg-blue-600" />
+                <span className="text-blue-600 text-xs font-bold tracking-[0.25em] uppercase">Case Studies</span>
+                <div className="h-px w-10 bg-blue-600" />
               </div>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4">Featured Projects</h2>
             </div>
 
             <div className="grid lg:grid-cols-3 gap-6">
               {projects.map((p, i) => (
-                <div key={i} className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-amber-400/50 transition-all duration-300 shadow-xl">
+                <div key={i} className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-blue-600/50 transition-all duration-300 shadow-xl">
                   <div className="relative h-56 overflow-hidden">
                     <Image src={p.img} alt={p.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 1024px) 100vw, 33vw" />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent" />
@@ -614,7 +614,7 @@ export default function DrillingWorkoverPage() {
                     </div>
                   </div>
                   {/* Bottom gold sweep */}
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-amber-400/0 group-hover:via-amber-400/80 to-transparent transition-all duration-500" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-600/0 group-hover:via-blue-600/80 to-transparent transition-all duration-500" />
                 </div>
               ))}
             </div>
@@ -683,9 +683,9 @@ export default function DrillingWorkoverPage() {
 
           <div className="relative max-w-4xl mx-auto text-center">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="h-px w-10 bg-amber-300" />
-              <span className="text-amber-300 text-xs font-bold tracking-[0.3em] uppercase">Get In Touch</span>
-              <div className="h-px w-10 bg-amber-300" />
+              <div className="h-px w-10 bg-blue-500" />
+              <span className="text-blue-500 text-xs font-bold tracking-[0.3em] uppercase">Get In Touch</span>
+              <div className="h-px w-10 bg-blue-500" />
             </div>
             <h2 className="font-display text-4xl md:text-6xl font-bold text-white mb-6 text-balance">
               Looking for Reliable Drilling<br />& Workover Support?
@@ -696,7 +696,7 @@ export default function DrillingWorkoverPage() {
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-9 py-4 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl transition-colors shadow-xl font-display tracking-wide"
+                className="inline-flex items-center gap-2 px-9 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-colors shadow-xl font-display tracking-wide"
               >
                 <Phone className="w-4 h-4" />
                 Request Consultation

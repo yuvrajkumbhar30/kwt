@@ -77,7 +77,7 @@ function useInView(threshold = 0.2) {
 const kpiData = [
   { label: "Lost Time Injury Rate", value: 0.12, suffix: "", prefix: "", decimals: 2, color: "text-green-400", bar: 95 },
   { label: "Total Safe Manhours (M)", value: 9, suffix: "M+", prefix: "", decimals: 0, color: "text-blue-400", bar: 100 },
-  { label: "Projects Delivered Safely", value: 500, suffix: "+", prefix: "", decimals: 0, color: "text-amber-400", bar: 88 },
+  { label: "Projects Delivered Safely", value: 500, suffix: "+", prefix: "", decimals: 0, color: "text-blue-600", bar: 88 },
   { label: "Training Hours / Year", value: 12000, suffix: "+", prefix: "", decimals: 0, color: "text-cyan-400", bar: 75 },
   { label: "Incident Reduction", value: 50, suffix: "%", prefix: "", decimals: 0, color: "text-green-400", bar: 50 },
   { label: "Environmental Compliance", value: 100, suffix: "%", prefix: "", decimals: 0, color: "text-emerald-400", bar: 100 },
@@ -113,7 +113,7 @@ const pillars = [
   {
     icon: ShieldCheck,
     title: "Workplace Safety",
-    color: "amber",
+    color: "blue",
     description: "ISO 45001 certified safety management with zero-tolerance incident culture and stop-work authority for all personnel.",
     details: [
       "ISO 45001:2018 OHS Management",
@@ -181,7 +181,7 @@ const safetySteps = [
 const trainingPrograms = [
   { title: "Safety Leadership", hours: "40h", participants: "120+", icon: Users, color: "blue" },
   { title: "Emergency First Aid", hours: "16h", participants: "340+", icon: Heart, color: "rose" },
-  { title: "H2S Awareness", hours: "8h", participants: "500+", icon: AlertTriangle, color: "amber" },
+  { title: "H2S Awareness", hours: "8h", participants: "500+", icon: AlertTriangle, color: "blue" },
   { title: "IADC WellSharp", hours: "80h", participants: "90+", icon: Award, color: "green" },
   { title: "Fire Fighting", hours: "24h", participants: "280+", icon: Flame, color: "orange" },
   { title: "Environmental Awareness", hours: "12h", participants: "400+", icon: Leaf, color: "emerald" },
@@ -246,7 +246,7 @@ function PillarCard({ pillar }: { pillar: typeof pillars[0] }) {
   const colorMap: Record<string, string> = {
     blue: "bg-blue-600/15 text-blue-400 border-blue-500/30 group-hover:bg-blue-600",
     rose: "bg-rose-600/15 text-rose-400 border-rose-500/30 group-hover:bg-rose-600",
-    amber: "bg-amber-500/15 text-amber-400 border-amber-500/30 group-hover:bg-amber-500",
+    blue: "bg-blue-700/15 text-blue-600 border-blue-500/30 group-hover:bg-blue-700",
     green: "bg-green-600/15 text-green-400 border-green-500/30 group-hover:bg-green-600",
   };
   const Icon = pillar.icon;
@@ -389,7 +389,7 @@ export default function QHSEPage() {
               </a>
               <button
                 onClick={() => setVideoOpen(true)}
-                className="inline-flex items-center gap-2 px-7 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-xl text-sm transition-colors shadow-lg font-display tracking-wide"
+                className="inline-flex items-center gap-2 px-7 py-3.5 bg-blue-700 hover:bg-blue-600 text-white font-bold rounded-xl text-sm transition-colors shadow-lg font-display tracking-wide"
               >
                 <Play className="w-4 h-4" fill="currentColor" />
                 Watch QHSE Video
@@ -532,13 +532,13 @@ export default function QHSEPage() {
         <section id="section-5" className="py-24 px-6 bg-slate-950">
           <div className="max-w-6xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <p className="text-amber-400 text-xs font-bold tracking-[0.25em] uppercase mb-3">Safety Culture</p>
+              <p className="text-blue-600 text-xs font-bold tracking-[0.25em] uppercase mb-3">Safety Culture</p>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 text-balance">How We Operate Safely</h2>
               <p className="text-slate-400 text-[15px] leading-relaxed">A step-by-step workflow embedded into every operation, every shift, every day.</p>
             </div>
             <div className="relative">
               {/* Connecting line */}
-              <div className="hidden lg:block absolute top-10 left-[8.33%] right-[8.33%] h-0.5 bg-gradient-to-r from-blue-600 via-amber-500 to-green-500 opacity-30" />
+              <div className="hidden lg:block absolute top-10 left-[8.33%] right-[8.33%] h-0.5 bg-gradient-to-r from-blue-600 via-blue-500 to-green-500 opacity-30" />
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
                 {safetySteps.map((step, i) => {
                   const Icon = step.icon;
@@ -595,7 +595,7 @@ export default function QHSEPage() {
                   const colorMap: Record<string, string> = {
                     blue: "bg-blue-600/15 border-blue-500/30 text-blue-400",
                     rose: "bg-rose-600/15 border-rose-500/30 text-rose-400",
-                    amber: "bg-amber-500/15 border-amber-500/30 text-amber-400",
+                    blue: "bg-blue-700/15 border-blue-500/30 text-blue-600",
                     green: "bg-green-600/15 border-green-500/30 text-green-400",
                     orange: "bg-orange-500/15 border-orange-500/30 text-orange-400",
                     emerald: "bg-emerald-600/15 border-emerald-500/30 text-emerald-400",
@@ -698,15 +698,15 @@ export default function QHSEPage() {
         <section id="section-8" className="py-24 px-6 bg-slate-950">
           <div className="max-w-6xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-16">
-              <p className="text-amber-400 text-xs font-bold tracking-[0.25em] uppercase mb-3">Safety Excellence</p>
+              <p className="text-blue-600 text-xs font-bold tracking-[0.25em] uppercase mb-3">Safety Excellence</p>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-white mb-4 text-balance">Projects Delivered Safely</h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {safetyProjects.map((proj) => (
-                <div key={proj.title} className="group relative rounded-2xl overflow-hidden bg-slate-800/60 border border-slate-700 hover:border-amber-500/50 transition-all duration-300">
+                <div key={proj.title} className="group relative rounded-2xl overflow-hidden bg-slate-800/60 border border-slate-700 hover:border-blue-500/50 transition-all duration-300">
                   <img src="/images/qhse-project-safety.png" alt={proj.title} className="w-full h-40 object-cover opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
                   <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-1 bg-amber-500/90 text-slate-900 text-xs font-bold rounded-full">{proj.tag}</span>
+                    <span className="px-2.5 py-1 bg-blue-700/90 text-slate-900 text-xs font-bold rounded-full">{proj.tag}</span>
                   </div>
                   <div className="p-6">
                     <h3 className="font-display font-bold text-white mb-3">{proj.title}</h3>

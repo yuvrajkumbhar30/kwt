@@ -174,7 +174,7 @@ function DirectorCard({ director, onClick }: { director: typeof directors[0]; on
       onClick={onClick}
     >
       {/* Gold accent top bar */}
-      <div className="h-1 w-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500" />
+      <div className="h-1 w-full bg-gradient-to-r from-blue-600 via-blue-400 to-blue-700" />
 
       {/* Portrait */}
       <div className="relative overflow-hidden aspect-[4/5] bg-slate-100">
@@ -231,7 +231,7 @@ function DirectorModal({ director, onClose }: { director: typeof directors[0]; o
         onClick={(e) => e.stopPropagation()}
       >
         {/* Gold bar */}
-        <div className="h-1.5 w-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 rounded-t-2xl" />
+        <div className="h-1.5 w-full bg-gradient-to-r from-blue-600 via-blue-400 to-blue-700 rounded-t-2xl" />
 
         <div className="p-8">
           <button
@@ -314,11 +314,11 @@ export default function BoardOfDirectorsPage() {
               <ChevronRight className="w-3.5 h-3.5" />
               <span className="text-white/50">About Us</span>
               <ChevronRight className="w-3.5 h-3.5" />
-              <span className="text-amber-400 font-medium">Board of Directors</span>
+              <span className="text-blue-600 font-medium">Board of Directors</span>
             </nav>
 
             <div className="max-w-3xl">
-              <p className="text-amber-400 text-xs font-bold tracking-[0.3em] uppercase mb-3">
+              <p className="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-3">
                 Corporate Governance
               </p>
               <h1 className="font-display text-5xl md:text-7xl font-bold text-white leading-tight text-balance mb-5 drop-shadow-md">
@@ -330,7 +330,7 @@ export default function BoardOfDirectorsPage() {
             </div>
 
             {/* Decorative gold bar */}
-            <div className="mt-10 w-24 h-1 bg-gradient-to-r from-amber-400 to-yellow-300 rounded-full" />
+            <div className="mt-10 w-24 h-1 bg-gradient-to-r from-blue-600 to-yellow-300 rounded-full" />
           </div>
         </section>
 
@@ -346,7 +346,7 @@ export default function BoardOfDirectorsPage() {
                 Driving Excellence<br />Through Principled Leadership
               </h2>
               {/* Animated gold divider */}
-              <div className="w-16 h-1 bg-amber-400 rounded-full mb-6" />
+              <div className="w-16 h-1 bg-blue-600 rounded-full mb-6" />
               <p className="text-slate-600 leading-relaxed mb-4 text-[15px]">
                 The Board of Directors of Kuwait Drilling CO. K.S.C.C. represents the highest level of corporate governance in the company. Comprising distinguished leaders from the energy, finance, legal, and operations sectors, our Board ensures that KDC upholds the highest standards of transparency, accountability, and strategic foresight.
               </p>
@@ -356,7 +356,7 @@ export default function BoardOfDirectorsPage() {
               <div className="mt-8 flex flex-wrap gap-4">
                 {["ISO 9001 Certified", "OHSAS 18001", "Zero Incident Record"].map((b) => (
                   <span key={b} className="flex items-center gap-2 px-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm font-semibold text-slate-700">
-                    <span className="w-2 h-2 rounded-full bg-amber-400" />
+                    <span className="w-2 h-2 rounded-full bg-blue-600" />
                     {b}
                   </span>
                 ))}
@@ -374,7 +374,7 @@ export default function BoardOfDirectorsPage() {
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-transparent" />
               </div>
               {/* Decorative corner frame */}
-              <div className="absolute -top-4 -left-4 w-20 h-20 border-t-4 border-l-4 border-amber-400 rounded-tl-xl" />
+              <div className="absolute -top-4 -left-4 w-20 h-20 border-t-4 border-l-4 border-blue-600 rounded-tl-xl" />
               <div className="absolute -bottom-4 -right-4 w-20 h-20 border-b-4 border-r-4 border-blue-600 rounded-br-xl" />
 
               {/* Floating badge */}
@@ -394,7 +394,7 @@ export default function BoardOfDirectorsPage() {
               <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 text-balance mb-4">
                 Meet the Board
               </h2>
-              <div className="w-16 h-1 bg-amber-400 rounded-full mx-auto mb-6" />
+              <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto mb-6" />
               <p className="text-slate-500 max-w-xl mx-auto text-[15px] leading-relaxed">
                 Six distinguished leaders united by a shared commitment to KDC's mission, values, and long-term vision for the energy sector.
               </p>
@@ -416,7 +416,7 @@ export default function BoardOfDirectorsPage() {
               <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 text-balance">
                 Leadership Highlights
               </h2>
-              <div className="w-16 h-1 bg-amber-400 rounded-full mx-auto mt-5" />
+              <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto mt-5" />
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {stats.map((s) => (
@@ -446,11 +446,11 @@ export default function BoardOfDirectorsPage() {
 
           <div className="relative z-10 max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <p className="text-amber-400 text-xs font-bold tracking-[0.3em] uppercase mb-3">What We Stand For</p>
+              <p className="text-blue-600 text-xs font-bold tracking-[0.3em] uppercase mb-3">What We Stand For</p>
               <h2 className="font-display text-4xl md:text-5xl font-bold text-white text-balance mb-4">
                 Governance & Values
               </h2>
-              <div className="w-16 h-1 bg-amber-400 rounded-full mx-auto mb-6" />
+              <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto mb-6" />
               <p className="text-slate-400 max-w-xl mx-auto text-[15px] leading-relaxed">
                 Our Board upholds four foundational pillars that guide every decision, from the boardroom to the field.
               </p>
@@ -460,10 +460,10 @@ export default function BoardOfDirectorsPage() {
               {governancePillars.map((pillar) => (
                 <div
                   key={pillar.title}
-                  className="group p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-amber-400/40 transition-all duration-300"
+                  className="group p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-blue-600/40 transition-all duration-300"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center mb-5 group-hover:bg-amber-400 transition-colors">
-                    <pillar.icon className="w-6 h-6 text-amber-400 group-hover:text-slate-900 transition-colors" />
+                  <div className="w-12 h-12 rounded-xl bg-blue-600/10 border border-blue-600/20 flex items-center justify-center mb-5 group-hover:bg-blue-600 transition-colors">
+                    <pillar.icon className="w-6 h-6 text-blue-600 group-hover:text-white transition-colors" />
                   </div>
                   <h3 className="font-display text-xl font-bold text-white mb-3">{pillar.title}</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">{pillar.desc}</p>
@@ -481,7 +481,7 @@ export default function BoardOfDirectorsPage() {
               <h2 className="font-display text-4xl md:text-5xl font-bold text-slate-900 text-balance mb-4">
                 Our Regional Presence
               </h2>
-              <div className="w-16 h-1 bg-amber-400 rounded-full mx-auto mb-6" />
+              <div className="w-16 h-1 bg-blue-600 rounded-full mx-auto mb-6" />
               <p className="text-slate-500 max-w-xl mx-auto text-[15px] leading-relaxed">
                 KDC delivers world-class oilfield services across Kuwait, Oman, and Jordan.
               </p>
@@ -558,11 +558,11 @@ export default function BoardOfDirectorsPage() {
           <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-blue-500/30 blur-3xl" />
           <div className="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-blue-900/40 blur-3xl" />
           {/* Gold accent line */}
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600" />
 
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/10 border border-white/20 mb-6">
-              <Building2 className="w-8 h-8 text-amber-400" />
+              <Building2 className="w-8 h-8 text-blue-600" />
             </div>
             <h2 className="font-display text-4xl md:text-6xl font-bold text-white text-balance mb-5 leading-tight">
               Build the Future<br />With Us
@@ -573,7 +573,7 @@ export default function BoardOfDirectorsPage() {
             <div className="flex flex-wrap justify-center gap-4 mb-12">
               <Link
                 href="#"
-                className="px-8 py-4 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl transition-colors font-display tracking-wide shadow-lg"
+                className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-colors font-display tracking-wide shadow-lg"
               >
                 Contact Us
               </Link>
@@ -588,10 +588,10 @@ export default function BoardOfDirectorsPage() {
             {/* Contact strip */}
             <div className="flex flex-wrap justify-center gap-6 text-blue-100 text-sm">
               <a href="tel:+965XXXXXXX" className="flex items-center gap-2 hover:text-white transition-colors">
-                <Phone className="w-4 h-4 text-amber-400" /> +965 XXXX XXXX
+                <Phone className="w-4 h-4 text-blue-600" /> +965 XXXX XXXX
               </a>
               <a href="mailto:info@kdckwt.com" className="flex items-center gap-2 hover:text-white transition-colors">
-                <Mail className="w-4 h-4 text-amber-400" /> info@kdckwt.com
+                <Mail className="w-4 h-4 text-blue-600" /> info@kdckwt.com
               </a>
             </div>
           </div>

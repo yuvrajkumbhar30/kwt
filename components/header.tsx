@@ -21,19 +21,29 @@ const navItems: NavItem[] = [
       { label: "Chairman's Message", href: '/chairmanmessage' },
       { label: 'Board of Directors', href: '/board-of-directors' },
       { label: 'Management Team', href: '/management-team' },
+      { label: 'KDC Oman', href: '/oman' },
     ],
   },
   {
-    label: 'Services',
+    label: 'KDC Services',
     href: '#',
     children: [
       { label: 'Drilling & Workover', href: '/services/drilling-workover' },
-      { label: 'Directional Drilling', href: '#' },
       { label: 'Water Well', href: '/services/water-well' },
-      { label: 'Tubular Running Services', href: '#' },
-      { label: 'Manpower', href: '#' },
-      { label: 'BHA Rental', href: '#' },
-      { label: 'Fishing Services', href: '#' },
+      { label: 'Tubular Running Services', href: '/services/tubular-running' },
+      { label: 'Manpower', href: '/services/manpower' },
+      { label: 'BHA Rental', href: '/services/bha-rental' },
+      { label: 'Trainings', href: '#' },
+    ],
+  },
+  {
+    label: 'Integrated Drilling Services',
+    href: '#',
+    children: [
+      { label: 'Drilling & Measurements', href: '#' },
+      { label: 'Fishing & Remedial Services', href: '#' },
+      { label: 'Cementing Services', href: '#' },
+      { label: 'Drilling Fluids Services', href: '#' },
     ],
   },
   { label: 'QHSE', href: '/qhse' },
@@ -45,9 +55,10 @@ const navItems: NavItem[] = [
   { label: 'Contact Us', href: '/contact' },
 ];
 
-function DropdownMenu({ items }: { items: NavChild[] }) {
+function DropdownMenu({ items, label }: { items: NavChild[]; label: string }) {
+  const isServiceGroup = label === 'KDC Services' || label === 'Integrated Drilling Services';
   return (
-    <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-slate-100 rounded-lg shadow-xl py-1 z-50">
+    <div className={`absolute top-full left-0 mt-1 bg-white border border-slate-100 rounded-xl shadow-2xl py-2 z-50 ${isServiceGroup ? 'w-72' : 'w-56'}`}>
       {items.map((child) => (
         <Link
           key={child.label}
@@ -119,7 +130,7 @@ export function Header() {
                 )}
               </Link>
               {item.children && openDropdown === item.label && (
-                <DropdownMenu items={item.children} />
+                <DropdownMenu items={item.children} label={item.label} />
               )}
             </div>
           ))}
@@ -155,7 +166,7 @@ export function Header() {
                       />
                     </button>
                     {mobileExpanded === item.label && (
-                      <div className="ml-4 mt-1 space-y-1 border-l-2 border-blue-100 pl-3">
+                      <div className="ml-4 mt-1 space-y-0.5 border-l-2 border-blue-100 pl-3">
                         {item.children.map((child) => (
                           <Link
                             key={child.label}

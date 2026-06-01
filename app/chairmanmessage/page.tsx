@@ -68,10 +68,10 @@ function VideoSection() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative flex items-center justify-center">
                     {/* Pulse ring */}
-                    <span className="absolute w-24 h-24 rounded-full bg-amber-400/20 animate-ping" />
+                    <span className="absolute w-24 h-24 rounded-full bg-blue-600/20 animate-ping" />
                     <button
                       aria-label="Play Chairman's Message video"
-                      className="relative w-20 h-20 rounded-full bg-amber-400 hover:bg-amber-300 transition-colors flex items-center justify-center shadow-xl group-hover:scale-110 duration-300"
+                      className="relative w-20 h-20 rounded-full bg-blue-600 hover:bg-blue-500 transition-colors flex items-center justify-center shadow-xl group-hover:scale-110 duration-300"
                     >
                       <Play className="w-8 h-8 text-slate-900 ml-1" fill="currentColor" />
                     </button>
@@ -108,14 +108,14 @@ function VideoSection() {
                   "Regional growth across Kuwait, Oman & Jordan",
                 ].map((point) => (
                   <li key={point} className="flex items-center gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-600 flex-shrink-0" />
                     {point}
                   </li>
                 ))}
               </ul>
               <button
                 onClick={openModal}
-                className="inline-flex items-center gap-3 self-start mt-2 px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl transition-colors font-display tracking-wide text-sm shadow-lg"
+                className="inline-flex items-center gap-3 self-start mt-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition-colors font-display tracking-wide text-sm shadow-lg"
               >
                 <Play className="w-4 h-4" fill="currentColor" />
                 Play Chairman&apos;s Message
